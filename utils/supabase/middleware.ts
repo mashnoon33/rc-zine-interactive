@@ -35,17 +35,18 @@ export const updateSession = async (request: NextRequest) => {
       },
     );
 
-    // This will refresh session if expired - required for Server Components
-    // https://supabase.com/docs/guides/auth/server-side/nextjs
-    const user = await supabase.auth.getUser();
+    // Get current user
+    const { data: { user } } = await supabase.auth.getUser();
 
-    // protected routes
-    if (request.nextUrl.pathname.startsWith("/protected") && user.error) {
-      return NextResponse.redirect(new URL("/sign-in", request.url));
-    }
-
-    if (request.nextUrl.pathname === "/" && !user.error) {
-      return NextResponse.redirect(new URL("/protected", request.url));
+    // If no user exists, sign in anonymously
+    if (!user) {
+      const { data: { user: anonUser }, error } = await supabase.auth.signInAnonymously();
+      if (error) {
+        console.error('Anonymous sign in error:', error);
+      }
+      if (!anonUser) {
+        console.error('No anonymous user created');
+      }
     }
 
     return response;
