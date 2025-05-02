@@ -22,16 +22,12 @@ export default function ColorPickerQuestion() {
         Mood color today:
       </h2>
       <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="flex items-center space-x-4">
+        <div className="flex justify-center items-center">
           <input
             type="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
             className="w-16 h-16 rounded-lg cursor-pointer"
-          />
-          <div 
-            className="w-16 h-16 rounded-lg border"
-            style={{ backgroundColor: color }}
           />
         </div>
         <button
