@@ -1,62 +1,44 @@
 'use client';
 
-import { useState } from 'react';
-import { useFortunator } from '../layout';
-import { useRouter } from 'next/navigation';
+import { useFortunator, QUESTIONS } from '../layout';
 
 const languages = [
-  'Rust',
-  'JavaScript',
-  'Python',
-  'TypeScript',
-  'Go',
-  'Java',
-  'C++',
-  'Ruby',
-  'PHP',
-  'Swift',
+  { id: 'python', label: 'Python' },
+  { id: 'rust', label: 'Rust' },
+  { id: 'go', label: 'Go' },
+  { id: 'typescript', label: 'TypeScript' },
 ];
 
 export default function LanguageQuestion() {
-  const [selectedLanguage, setSelectedLanguage] = useState('');
-  const { setAnswer, setCurrentQuestion } = useFortunator();
-  const router = useRouter();
+  const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
+  const question = QUESTIONS[currentQuestion];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (selectedLanguage) {
-      setAnswer('favorite_language', selectedLanguage);
-      setCurrentQuestion(4);
-      router.push('/landing/fortunator/question_5');
-    }
+  const handleSelect = (languageId: string) => {
+    setAnswer('favorite_language', languageId);
+    nextQuestion();
   };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">
-        What's your favorite language this month?
+        {question.prompt.split(question.highlight).map((part: string, i: number, arr: string[]) => (
+          <>
+            {part}
+            {i < arr.length - 1 && <span className="text-purple-600">{question.highlight}</span>}
+          </>
+        ))}
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <select
-          value={selectedLanguage}
-          onChange={(e) => setSelectedLanguage(e.target.value)}
-          className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-          required
-        >
-          <option value="">Select a language</option>
-          {languages.map((lang) => (
-            <option key={lang} value={lang}>
-              {lang}
-            </option>
-          ))}
-        </select>
-        <button
-          type="submit"
-          className="w-full p-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
-        >
-          Continue
-        </button>
-      </form>
+      <div className="grid grid-cols-3 gap-4">
+        {languages.map((language) => (
+          <button
+            key={language.id}
+            onClick={() => handleSelect(language.id)}
+            className="p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+          >
+            {language.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 } 

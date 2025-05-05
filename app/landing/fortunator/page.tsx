@@ -1,17 +1,18 @@
 'use client';
 
-import { useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useFortunator } from './layout';
+import NameInput from './_components/NameInput';
 
 export default function FortunatorPage() {
-    const router = useRouter();
-    const { setCurrentQuestion } = useFortunator();
+    const { name } = useFortunator();
 
-    useEffect(() => {
-        setCurrentQuestion(0);
-        router.push('/landing/fortunator/question_1');
-    }, [router, setCurrentQuestion]);
+    if (!name) {
+        return (
+            <div className="space-y-8">
+                <NameInput />
+            </div>
+        );
+    }
 
-    return null;
+    return null; // The layout will handle rendering the questions
 }

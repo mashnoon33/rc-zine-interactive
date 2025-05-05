@@ -1,42 +1,52 @@
 'use client';
 
-import { useState } from 'react';
-import { useFortunator } from '../layout';
-import { useRouter } from 'next/navigation';
+import { useFortunator, QUESTIONS } from '../layout';
+
+const colors = [
+  { id: 'red', hex: '#FF0000' },
+  { id: 'orange', hex: '#FFA500' },
+  { id: 'yellow', hex: '#FFFF00' },
+  { id: 'green', hex: '#00FF00' },
+  { id: 'blue', hex: '#0000FF' },
+  { id: 'purple', hex: '#800080' },
+  { id: 'pink', hex: '#FFC0CB' },
+  { id: 'brown', hex: '#A52A2A' },
+  { id: 'black', hex: '#000000' },
+  { id: 'white', hex: '#FFFFFF' },
+  { id: 'gray', hex: '#808080' },
+  { id: 'teal', hex: '#008080' },
+];
 
 export default function ColorPickerQuestion() {
-  const [color, setColor] = useState('#6366f1');
-  const { setAnswer, setCurrentQuestion } = useFortunator();
-  const router = useRouter();
+  const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
+  const question = QUESTIONS[currentQuestion];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setAnswer('mood_color', color);
-    setCurrentQuestion(3);
-    router.push('/landing/fortunator/question_4');
+  const handleSelect = (colorId: string) => {
+    setAnswer('mood_color', colorId);
+    nextQuestion();
   };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">
-        Mood color today:
+        {question.prompt.split(question.highlight).map((part: string, i: number, arr: string[]) => (
+          <>
+            {part}
+            {i < arr.length - 1 && <span className="text-purple-600">{question.highlight}</span>}
+          </>
+        ))}
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="flex justify-center items-center">
-          <input
-            type="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
-            className="w-16 h-16 rounded-lg cursor-pointer"
+      <div className="grid grid-cols-4 gap-4">
+        {colors.map((color) => (
+          <button
+            key={color.id}
+            onClick={() => handleSelect(color.id)}
+            className="aspect-square rounded-lg border-2 border-gray-200 hover:border-purple-500 transition-all duration-200"
+            style={{ backgroundColor: color.hex }}
+            title={color.id}
           />
-        </div>
-        <button
-          type="submit"
-          className="w-full p-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
-        >
-          Continue
-        </button>
-      </form>
+        ))}
+      </div>
     </div>
   );
 } 

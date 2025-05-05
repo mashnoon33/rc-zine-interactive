@@ -1,7 +1,6 @@
 'use client';
 
-import { useFortunator } from '../layout';
-import { useRouter } from 'next/navigation';
+import { useFortunator, QUESTIONS } from '../layout';
 
 const options = [
   { id: 'ferret', label: 'Ferret on espresso' },
@@ -11,19 +10,23 @@ const options = [
 ];
 
 export default function EnergyQuestion() {
-  const { setAnswer, setCurrentQuestion } = useFortunator();
-  const router = useRouter();
+  const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
+  const question = QUESTIONS[currentQuestion];
 
   const handleSelect = (optionId: string) => {
     setAnswer('energy', optionId);
-    setCurrentQuestion(1);
-    router.push('/landing/fortunator/question_2');
+    nextQuestion();
   };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">
-        How would you describe your <span className="text-purple-600">energy</span> this week?
+        {question.prompt.split(question.highlight).map((part: string, i: number, arr: string[]) => (
+          <>
+            {part}
+            {i < arr.length - 1 && <span className="text-purple-600">{question.highlight}</span>}
+          </>
+        ))}
       </h2>
       <div className="space-y-4 text-black">
         {options.map((option) => (

@@ -1,8 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { useFortunator } from '../layout';
-import { useRouter } from 'next/navigation';
+import { useFortunator, QUESTIONS } from '../layout';
 
 const options = [
   { id: 'garden', label: 'An overgrown garden' },
@@ -12,47 +10,35 @@ const options = [
 ];
 
 export default function DevEnvironmentQuestion() {
-  const [selected, setSelected] = useState('');
-  const { setAnswer, setCurrentQuestion } = useFortunator();
-  const router = useRouter();
+  const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
+  const question = QUESTIONS[currentQuestion];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (selected) {
-      setAnswer('dev_environment', selected);
-      setCurrentQuestion(9);
-      router.push('/landing/fortunator/results');
-    }
+  const handleSelect = (optionId: string) => {
+    setAnswer('dev_environment', optionId);
+    nextQuestion();
   };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">
-        "My dev environment feels like..."
+        {question.prompt.split(question.highlight).map((part: string, i: number, arr: string[]) => (
+          <>
+            {part}
+            {i < arr.length - 1 && <span className="text-purple-600">{question.highlight}</span>}
+          </>
+        ))}
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
+      <div className="space-y-4 text-black">
         {options.map((option) => (
           <button
             key={option.id}
-            type="button"
-            onClick={() => setSelected(option.id)}
-            className={`w-full p-4 text-left border rounded-lg transition-all duration-200 ${
-              selected === option.id
-                ? 'border-purple-500 bg-purple-50'
-                : 'hover:border-purple-500 hover:bg-purple-50'
-            }`}
+            onClick={() => handleSelect(option.id)}
+            className="w-full p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
           >
             {option.label}
           </button>
         ))}
-        <button
-          type="submit"
-          disabled={!selected}
-          className="w-full p-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          Continue
-        </button>
-      </form>
+      </div>
     </div>
   );
 } 

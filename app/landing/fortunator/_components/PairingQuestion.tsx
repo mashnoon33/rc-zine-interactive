@@ -1,49 +1,43 @@
 'use client';
 
-import { useState } from 'react';
-import { useFortunator } from '../layout';
-import { useRouter } from 'next/navigation';
+import { useFortunator, QUESTIONS } from '../layout';
+
+const options = [
+  { id: 'yes', label: 'Yes, I love it!' },
+  { id: 'no', label: 'No, I prefer to code alone' },
+  { id: 'sometimes', label: 'Sometimes, depends on the task' },
+];
 
 export default function PairingQuestion() {
-  const [pairingSessions, setPairingSessions] = useState(0);
-  const { setAnswer, setCurrentQuestion } = useFortunator();
-  const router = useRouter();
+  const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
+  const question = QUESTIONS[currentQuestion];
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setAnswer('pairing_sessions', pairingSessions);
-    setCurrentQuestion(6);
-    router.push('/landing/fortunator/question_7');
+  const handleSelect = (optionId: string) => {
+    setAnswer('pairing', optionId);
+    nextQuestion();
   };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">
-        How many times have you paired this week?
+        {question.prompt.split(question.highlight).map((part: string, i: number, arr: string[]) => (
+          <>
+            {part}
+            {i < arr.length - 1 && <span className="text-purple-600">{question.highlight}</span>}
+          </>
+        ))}
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div className="space-y-2">
-          <input
-            type="range"
-            min="0"
-            max="10"
-            value={pairingSessions}
-            onChange={(e) => setPairingSessions(parseInt(e.target.value))}
-            className="w-full"
-          />
-          <div className="flex justify-between text-sm text-gray-600">
-            <span>0</span>
-            <span className="font-bold">{pairingSessions}</span>
-            <span>10</span>
-          </div>
-        </div>
-        <button
-          type="submit"
-          className="w-full p-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
-        >
-          Continue
-        </button>
-      </form>
+      <div className="space-y-4 text-black">
+        {options.map((option) => (
+          <button
+            key={option.id}
+            onClick={() => handleSelect(option.id)}
+            className="w-full p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 } 

@@ -1,44 +1,38 @@
 'use client';
 
-import { useState } from 'react';
 import { useFortunator } from '../layout';
-import { useRouter } from 'next/navigation';
+
+const options = [
+  { id: 'classical', label: 'Classical music' },
+  { id: 'rock', label: 'Rock music' },
+  { id: 'silence', label: 'Complete silence' },
+  { id: 'podcast', label: 'A podcast' },
+];
 
 export default function DebuggingSoundtrackQuestion() {
-  const [soundtrack, setSoundtrack] = useState('');
-  const { setAnswer, setCurrentQuestion } = useFortunator();
-  const router = useRouter();
+  const { setAnswer, nextQuestion } = useFortunator();
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (soundtrack.trim()) {
-      setAnswer('debugging_soundtrack', soundtrack);
-      setCurrentQuestion(2);
-      router.push('/landing/fortunator/question_3');
-    }
+  const handleSelect = (optionId: string) => {
+    setAnswer('debugging_soundtrack', optionId);
+    nextQuestion();
   };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">
-        What's your debugging soundtrack?
+        Your debugging <span className="text-purple-600">soundtrack</span> is...
       </h2>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="text"
-          value={soundtrack}
-          onChange={(e) => setSoundtrack(e.target.value)}
-          placeholder="Enter your debugging soundtrack..."
-          className="w-full p-4 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
-          required
-        />
-        <button
-          type="submit"
-          className="w-full p-4 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
-        >
-          Continue
-        </button>
-      </form>
+      <div className="space-y-4 text-black">
+        {options.map((option) => (
+          <button
+            key={option.id}
+            onClick={() => handleSelect(option.id)}
+            className="w-full p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+          >
+            {option.label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 } 
