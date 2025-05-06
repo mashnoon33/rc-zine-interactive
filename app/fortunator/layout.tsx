@@ -249,7 +249,6 @@ export default function FortunatorLayout({
       <div className="min-h-screen">
         <div className="max-w-2xl mx-auto px-4 py-8">
           <div className="space-y-8">
-            <pre>{JSON.stringify(user, null, 2)}</pre>
             <ProgressBar />
             {CurrentQuestionComponent && <CurrentQuestionComponent />}
           </div>

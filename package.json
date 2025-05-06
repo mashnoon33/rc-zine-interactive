@@ -19,12 +19,13 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "emoji-picker-react": "^4.12.2",
-    "lucide-react": "^0.468.0",
+    "lucide-react": "^0.507.0",
     "next": "latest",
     "next-themes": "^0.4.3",
     "prettier": "^3.3.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
+    "recharts": "^2.15.3",
     "zod": "^3.24.3"
   },
   "devDependencies": {

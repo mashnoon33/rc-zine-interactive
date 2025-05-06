@@ -1,25 +1,30 @@
 'use client';
 
-import { useFortunator, ANSWER_LABELS, QuestionKey, QUESTIONS } from '../layout';
-import { useEffect, useState, useCallback } from "react";
-import { saveSurveyEntries } from '../_hook/save-survey-entry';
-import { saveFortune } from '../_hook/save-fortune';
-import { useUser } from '@/hooks/useUser';
+import { useFortunator, ANSWER_LABELS, QuestionKey } from '../layout';
+import { useEffect, useState } from "react";
 
 function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, any>> }) {
   const [fortune, setFortune] = useState<string>("");
   const [haiku, setHaiku] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const { name } = useFortunator();
-  const { user } = useUser();
 
-  const generateFortune = useCallback(async (
+  const getAnswerLabel = (questionId: QuestionKey, value: any) => {
+    if (!value) return '';
+    const labels = ANSWER_LABELS[questionId as keyof typeof ANSWER_LABELS];
+    return labels ? labels[value as keyof typeof labels] || value : value;
+  };
+
+  useEffect(() => {
+    generateFortune(name, answers, setFortune, setHaiku, setLoading);
+  }, [answers, name]);
+
+  const generateFortune = async (
     name: string,
     answers: Partial<Record<QuestionKey, any>>,
     setFortune: React.Dispatch<React.SetStateAction<string>>,
     setHaiku: React.Dispatch<React.SetStateAction<string[]>>,
-    setLoading: React.Dispatch<React.SetStateAction<boolean>>,
-    shouldSaveToDb: boolean = false
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>
   ) => {
     const defaultFortune = "Your coding journey will be filled with exciting discoveries and successful projects!";
     const defaultHaiku = [
@@ -29,7 +34,6 @@ function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, an
     ];
 
     try {
-      setLoading(true);
       const response = await fetch('/api/fortunator/generate', {
         method: 'POST',
         headers: {
@@ -45,17 +49,6 @@ function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, an
       const data = await response.json();
       setFortune(data.fortune);
       setHaiku(data.haiku);
-
-      // Only save to database if explicitly requested
-      if (shouldSaveToDb && user) {
-        const entries = Object.entries(answers).map(([questionId, value]) => ({
-          questionId,
-          answerId: value.toString(),
-        }));
-        await saveSurveyEntries(user.id, entries);
-        await saveFortune(user.id, data.fortune, data.haiku);
-      }
-
     } catch (error) {
       console.error("Error generating fortune:", error);
       setFortune(defaultFortune);
@@ -63,13 +56,7 @@ function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, an
     } finally {
       setLoading(false);
     }
-  }, [user]);
-
-  useEffect(() => {
-    if (user && !fortune) {
-      generateFortune(name, answers, setFortune, setHaiku, setLoading, true);
-    }
-  }, [user, name, answers, generateFortune, fortune]);
+  };
 
   if (loading) {
     return <div className="p-6 bg-white rounded-lg shadow-sm border animate-pulse">Generating your fortune...</div>;
@@ -80,12 +67,7 @@ function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, an
       <h3 className="text-lg font-semibold text-gray-900 mb-6">
         {name ? `${name}'s` : 'Your'} Coding Fortune
       </h3>
-      <button 
-        onClick={() => generateFortune(name, answers, setFortune, setHaiku, setLoading, false)}
-        className="mb-6 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors duration-200"
-      >
-        Generate New Fortune
-      </button>
+
       <div className="flex justify-center mb-8">
         <div className="relative w-72">
           <div className="relative bg-white p-6 text-center border border-gray-300 shadow-md transform -rotate-1">
@@ -128,14 +110,14 @@ function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, an
   );
 }
 
-export default function ResultsQuestion() {
+export default function ResultsPage() {
   const { answers } = useFortunator();
 
-  const getAnswerLabel = useCallback((questionId: QuestionKey, value: any) => {
+  const getAnswerLabel = (questionId: QuestionKey, value: any) => {
     if (!value) return '';
     const labels = ANSWER_LABELS[questionId as keyof typeof ANSWER_LABELS];
     return labels ? labels[value as keyof typeof labels] || value : value;
-  }, []);
+  };
 
   return (
     <div className="space-y-8">
@@ -145,22 +127,19 @@ export default function ResultsQuestion() {
         <div className="p-6 bg-white rounded-lg shadow-sm border">
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Your Preferences</h3>
           <div className="space-y-4">
-            {Object.entries(answers).map(([questionId, value]) => {
-              const question = QUESTIONS.find(q => q.id === questionId);
-              return (
-                <div key={questionId} className="border-b last:border-b-0 pb-4 last:pb-0">
-                  <h4 className="text-md font-medium text-gray-900 mb-1">
-                    {question?.prompt || questionId.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
-                  </h4>
-                  <p className="text-gray-600">
-                    {getAnswerLabel(questionId as QuestionKey, value)}
-                  </p>
-                </div>
-              );
-            })}
+            {Object.entries(answers).map(([questionId, value]) => (
+              <div key={questionId} className="border-b last:border-b-0 pb-4 last:pb-0">
+                <h4 className="text-md font-medium text-gray-900 mb-1">
+                  {questionId.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                </h4>
+                <p className="text-gray-600">
+                  {getAnswerLabel(questionId as QuestionKey, value)}
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </div>
   );
-}
+} 
