@@ -241,7 +241,7 @@ export default function StoryTime() {
           <h2 className="text-xl font-semibold">What happens next?</h2>
           
           {isGenerating ? (
-            <div className="text-center py-4">Generating story continuations...</div>
+            <div className="text-center py-4">Generating story continuations...We are probably getting rate limited by OpenAI lol</div>
           ) : continuations.length > 0 ? (
             <div className="space-y-4">
               {continuations.map((continuation, index) => (
