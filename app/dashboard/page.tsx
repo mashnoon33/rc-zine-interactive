@@ -7,7 +7,8 @@ import { Visualization as SpringEmojiViz } from '@/components/fortunator/SpringE
 import { Visualization as EnergyViz } from '@/components/fortunator/EnergyQuestion';
 import { Visualization as DevEnvViz } from '@/components/fortunator/DevEnvironmentQuestion';
 import { Visualization as LanguageViz } from '@/components/fortunator/LanguageQuestion';
-
+import { Visualization as ColorPickerViz } from '@/components/fortunator/ColorPickerQuestion';
+import { Visualization as RageQuitViz } from '@/components/fortunator/RageQuitQuestion';
 type Submission = Tables<'submissions'>;
 
 export default function DashboardPage() {
@@ -71,43 +72,50 @@ export default function DashboardPage() {
     <div className="p-4 space-y-8">
       <h1 className="text-2xl font-bold mb-4">Developer Insights Dashboard</h1>
       
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {/* Energy Level Visualization */}
         {groupedSubmissions['energy'] && (
-          <div>
+          <div className="h-full">
             <EnergyViz data={groupedSubmissions['energy'].answers} />
           </div>
         )}
 
         {/* Development Environment Visualization */}
         {groupedSubmissions['dev_environment'] && (
-          <div>
+          <div className="h-full">
             <DevEnvViz data={groupedSubmissions['dev_environment'].answers} />
           </div>
         )}
 
         {/* Programming Language Visualization */}
         {groupedSubmissions['favorite_language'] && (
-          <div>
+          <div className="h-full">
             <LanguageViz data={groupedSubmissions['favorite_language'].answers} />
           </div>
         )}
 
         {/* Spring Emoji Visualization */}
         {groupedSubmissions['spring_emoji'] && (
-          <div>
+          <div className="h-full">
             <SpringEmojiViz data={groupedSubmissions['spring_emoji'].answers} />
+          </div>
+        )}
+
+        {/* Color Picker Visualization */}
+        {groupedSubmissions['mood_color'] && (
+          <div className="h-full">
+            <ColorPickerViz data={groupedSubmissions['mood_color'].answers} />
+          </div>
+        )}
+
+        {/* Rage Quit Visualization */}
+        {groupedSubmissions['rage_quit'] && (
+          <div className="h-full">
+            <RageQuitViz data={groupedSubmissions['rage_quit'].answers} />
           </div>
         )}
       </div>
 
-      {/* Raw Data Display */}
-      <div>
-        <h2 className="text-xl font-semibold mb-2">Raw Submission Data</h2>
-        <pre className="bg-gray-100 p-4 rounded-lg overflow-auto">
-          {JSON.stringify(groupedSubmissions, null, 2)}
-        </pre>
-      </div>
     </div>
   );
 }

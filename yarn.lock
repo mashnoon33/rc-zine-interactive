@@ -786,6 +786,24 @@
   dependencies:
     "@types/node" "*"
 
+"@uiw/color-convert@2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@uiw/color-convert/-/color-convert-2.5.4.tgz#b42473cf5a70e6acb80be92daa01ce15b80e12e1"
+  integrity sha512-gcVsu9SfEbob9SJggmlrDhMp6bngqsEqjr7KYM86Ltq5wghmvfUnJlvVd6HxLjuGFlqy5zqbK1Z6GDLDoSmsWg==
+
+"@uiw/react-color-wheel@^2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@uiw/react-color-wheel/-/react-color-wheel-2.5.4.tgz#cbdcc29b9ee904407aa8bc5453f7280ef7c084e3"
+  integrity sha512-EQ9mBsBkhiCiHaEUagiF6wGIQuoyFc88HU4x4Kk/sQ+VBUxGpxVxMXRvuBeUwLgypbXSbjClSmQs1mtrJ3e1BQ==
+  dependencies:
+    "@uiw/color-convert" "2.5.4"
+    "@uiw/react-drag-event-interactive" "2.5.4"
+
+"@uiw/react-drag-event-interactive@2.5.4":
+  version "2.5.4"
+  resolved "https://registry.yarnpkg.com/@uiw/react-drag-event-interactive/-/react-drag-event-interactive-2.5.4.tgz#743a43695f8e98bdaaa05a3b26204274a24aa0d6"
+  integrity sha512-VEzRKVPp5tuMDntxVsIJ8liJgJ4t3ZIGORHWReAGzt2IBIFxEAxtN7YsDuoxN2G96qBoWgwZptmAUKdUPHhPMQ==
+
 ai@^4.3.13:
   version "4.3.13"
   resolved "https://registry.npmjs.org/ai/-/ai-4.3.13.tgz"

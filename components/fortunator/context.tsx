@@ -50,12 +50,6 @@ export const QUESTIONS: Question[] = [
       highlight: "must go",
     },
     {
-      id: QUESTION_KEYS.PAIRING,
-      component: PairingQuestion,
-      prompt: "Do you enjoy pair programming?",
-      highlight: "pair programming",
-    },
-    {
       id: QUESTION_KEYS.RAGE_QUIT,
       component: RageQuitQuestion,
       prompt: "How do you rage quit?",
