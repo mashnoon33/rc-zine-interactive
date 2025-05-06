@@ -113,32 +113,33 @@ export default function StoryTime() {
     setIsGenerating(true);
     try {
       const personas: Persona[] = ['conspiracy', 'optimist', 'pessimist'];
-      const newContinuations: StoryContinuation[] = [];
+      
+      const response = await fetch('/api/storytime/generate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          theme: selectedTheme,
+          story,
+          personas,
+        }),
+      });
 
-      for (const persona of personas) {
-        console.log(`Generating for persona: ${persona}`);
-        const response = await fetch('/api/storytime/generate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            theme: selectedTheme,
-            story,
-            persona,
-          }),
-        });
-
-        if (!response.ok) {
-          console.error(`Failed to generate for ${persona}:`, response.statusText);
-          throw new Error('Failed to generate continuation');
-        }
-        
-        const { continuation } = await response.json();
-        console.log(`Generated for ${persona}:`, continuation);
-        newContinuations.push({ text: continuation, persona });
+      if (!response.ok) {
+        console.error('Failed to generate continuations:', response.statusText);
+        throw new Error('Failed to generate continuations');
       }
+      
+      const { continuations } = await response.json();
+      console.log('Generated continuations:', continuations);
+
+      // Transform the continuations to match the expected format
+      const formattedContinuations = continuations.map((c: { persona: Persona; continuation: string }) => ({
+        text: c.continuation,
+        persona: c.persona
+      }));
 
       // Randomize the order of continuations
-      const shuffledContinuations = [...newContinuations].sort(() => Math.random() - 0.5);
+      const shuffledContinuations = [...formattedContinuations].sort(() => Math.random() - 0.5);
       console.log('All continuations generated (shuffled):', shuffledContinuations);
       setContinuations(shuffledContinuations);
     } catch (error) {

@@ -1,5 +1,5 @@
 import { generateText } from "ai";
-import { google } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { NextResponse } from 'next/server';
 
 type Theme = 'spring' | 'coding';
@@ -10,7 +10,7 @@ const PERSONA_PROMPTS = {
     - Bizarre logic and quirky paranoia
     - Fringe speculation and wild theories
     - Suspicious of everything
-    - Keep responses to 1 line, max 100 words (average 50)
+    - Keep responses to 1 sentence, max 25 words  
     - Make it feel like a real person's reaction
     - Notice strange patterns and hidden meanings
     - Keep it natural and conversational 
@@ -20,7 +20,7 @@ const PERSONA_PROMPTS = {
     - Sunny and enthusiastic
     - Full of charm and sparkle
     - Always seeing the bright side
-    - Keep responses to 1 line, max 100 words (average 50)
+    - Keep responses to 1 sentence, max 25 words  
     - Make it feel like a real person's reaction
     - Notice beautiful things and find joy
     - Keep it natural and conversational
@@ -30,7 +30,7 @@ const PERSONA_PROMPTS = {
     - Bleak and melodramatic
     - Self-aware gloom
     - Everything is doomed
-    - Keep responses to 1 line, max 100 words (average 50)
+    - Keep responses to 1 sentence, max 25 words  
     - Make it feel like a real person's reaction
     - Question life's meaning and find the cloud in every silver lining
     - Keep it natural and conversational
@@ -47,7 +47,7 @@ ${storyContext}
 
 ${personaPrompt}
 
-Continue the story in your character's voice. Keep your response to 1 line, maximum 100 words (aim for around 50). Feel free to:
+Continue the story in your character's voice. CRITICAL: Keep your response to EXACTLY 25 words or less. This is a hard limit. Feel free to:
 - Add dialogue
 - Keep sentences short and concise
 - Include actions and movements
@@ -56,7 +56,12 @@ Continue the story in your character's voice. Keep your response to 1 line, maxi
 - Interact with objects or people
 - Express emotions through behavior
 
-IMPORTANT: Continue the story naturally from where it left off. Don't respond to or reference other characters' perspectives - just continue the narrative in your own voice.`;
+IMPORTANT: 
+1. Continue the story naturally from where it left off
+2. Don't respond to or reference other characters' perspectives
+3. Keep your response to EXACTLY 25 words or less
+4. Count your words carefully before responding
+5. If you exceed 25 words, rewrite your response to be shorter`;
 };
 
 export async function POST(request: Request) {
@@ -64,30 +69,36 @@ export async function POST(request: Request) {
     const body = await request.json();
     console.log('Received request body:', body);
     
-    const { theme, story, persona } = body;
+    const { theme, story, personas } = body;
     
-    if (!theme || !story || !persona) {
-      console.error('Missing required fields:', { theme, story, persona });
+    if (!theme || !story || !personas || !Array.isArray(personas)) {
+      console.error('Missing required fields:', { theme, story, personas });
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
       );
     }
 
-    const prompt = createPrompt(theme, story, persona);
-    console.log('Generated prompt:', prompt);
-    
-    const { text } = await generateText({
-      model: google("models/gemini-2.0-flash-exp"),
-      prompt,
-    });
+    const continuations = await Promise.all(
+      personas.map(async (persona: Persona) => {
+        const prompt = createPrompt(theme, story, persona);
+        console.log(`Generated prompt for ${persona}:`, prompt);
+        
+        const { text } = await generateText({
+          model: openai("gpt-4o-mini"),
+          prompt,
+        });
 
-    console.log('Generated text:', text);
-    return NextResponse.json({ continuation: text.trim() });
+        console.log(`Generated text for ${persona}:`, text);
+        return { persona, continuation: text.trim() };
+      })
+    );
+
+    return NextResponse.json({ continuations });
   } catch (error) {
-    console.error("Error generating story continuation:", error);
+    console.error("Error generating story continuations:", error);
     return NextResponse.json(
-      { error: "Failed to generate continuation", details: error instanceof Error ? error.message : 'Unknown error' },
+      { error: "Failed to generate continuations", details: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     );
   }

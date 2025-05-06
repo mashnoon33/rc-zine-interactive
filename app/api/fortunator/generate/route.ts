@@ -1,5 +1,5 @@
 import { generateText } from "ai";
-import { google } from "@ai-sdk/google";
+import { openai } from "@ai-sdk/openai";
 import { NextResponse } from 'next/server';
 
 const ANSWER_LABELS = {
@@ -86,7 +86,7 @@ export async function POST(request: Request) {
     const prompt = createPrompt(name, answers);
     
     const { text } = await generateText({
-      model: google("models/gemini-2.0-flash-exp"),
+      model: openai("gpt-4o-mini"),
       prompt,
     });
 
