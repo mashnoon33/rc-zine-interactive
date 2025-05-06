@@ -1,12 +1,7 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
-
-export const options = [
-  { id: 'yes', label: '🤝 Yes, I love it!' },
-  { id: 'no', label: '🎧 No, I prefer to code alone' },
-  { id: 'sometimes', label: '⚖️ Sometimes, depends on the task' },
-];
+import { pairingOptions } from './consts';
 
 export default function PairingQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
@@ -28,7 +23,7 @@ export default function PairingQuestion() {
         ))}
       </h2>
       <div className="space-y-4 text-black">
-        {options.map((option) => (
+        {pairingOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}

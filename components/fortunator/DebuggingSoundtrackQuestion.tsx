@@ -1,13 +1,7 @@
 'use client';
 
 import { useFortunator } from '../../app/fortunator/layout';
-
-const options = [
-  { id: 'classical', label: 'Classical music' },
-  { id: 'rock', label: 'Rock music' },
-  { id: 'silence', label: 'Complete silence' },
-  { id: 'podcast', label: 'A podcast' },
-];
+import { debuggingSoundtrackOptions } from './consts';
 
 export default function DebuggingSoundtrackQuestion() {
   const { setAnswer, nextQuestion } = useFortunator();
@@ -23,7 +17,7 @@ export default function DebuggingSoundtrackQuestion() {
         Your debugging <span className="text-purple-600">soundtrack</span> is...
       </h2>
       <div className="space-y-4 text-black">
-        {options.map((option) => (
+        {debuggingSoundtrackOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}

@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { Tables } from '@/types/database.types';
+import { Visualization } from '@/components/fortunator/SpringEmojiQuestion';
 
 type Submission = Tables<'submissions'>;
 
@@ -65,11 +66,23 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 space-y-8">
       <h1 className="text-2xl font-bold mb-4">Submissions</h1>
-      <pre className="bg-gray-100 p-4 rounded-lg overflow-auto">
-        {JSON.stringify(groupedSubmissions, null, 2)}
-      </pre>
+      
+      {/* Spring Emoji Visualization */}
+      {groupedSubmissions['spring_emoji'] && (
+        <div className="mb-8">
+          <Visualization data={groupedSubmissions['spring_emoji'].answers} />
+        </div>
+      )}
+
+      {/* Raw Data Display */}
+      <div>
+        <h2 className="text-xl font-semibold mb-2">Raw Submission Data</h2>
+        <pre className="bg-gray-100 p-4 rounded-lg overflow-auto">
+          {JSON.stringify(groupedSubmissions, null, 2)}
+        </pre>
+      </div>
     </div>
   );
 }

@@ -1,13 +1,7 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
-
-export const options = [
-  { id: 'python', label: '🐍 Python' },
-  { id: 'rust', label: '🦀 Rust' },
-  { id: 'go', label: '🚀 Go' },
-  { id: 'typescript', label: '📘 TypeScript' },
-];
+import { languageOptions } from './consts';
 
 export default function LanguageQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
@@ -29,7 +23,7 @@ export default function LanguageQuestion() {
         ))}
       </h2>
       <div className="grid grid-cols-3 gap-4">
-        {options.map((language) => (
+        {languageOptions.map((language) => (
           <button
             key={language.id}
             onClick={() => handleSelect(language.id)}

@@ -1,13 +1,7 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
-
-export const options = [
-  { id: 'garden', label: '🌿 An overgrown garden' },
-  { id: 'bicycle', label: '🚲 A well-oiled bicycle' },
-  { id: 'haunted', label: '👻 A haunted house' },
-  { id: 'spreadsheet', label: '📊 A spreadsheet with feelings' },
-];
+import { devEnvironmentOptions } from './consts';
 
 export default function DevEnvironmentQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
@@ -29,7 +23,7 @@ export default function DevEnvironmentQuestion() {
         ))}
       </h2>
       <div className="space-y-4 text-black">
-        {options.map((option) => (
+        {devEnvironmentOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}

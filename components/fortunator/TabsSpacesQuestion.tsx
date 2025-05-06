@@ -1,12 +1,7 @@
 'use client';
 
 import { useFortunator } from '../../app/fortunator/layout';
-
-export const options = [
-  { id: 'tabs', label: '↹ Tabs' },
-  { id: 'spaces', label: '␣ Spaces' },
-  { id: 'dont_at_me', label: "🤫 Don't @ me" },
-];
+import { tabsSpacesOptions } from './consts';
 
 export default function TabsSpacesQuestion() {
   const { setAnswer, setCurrentQuestion } = useFortunator();
@@ -22,7 +17,7 @@ export default function TabsSpacesQuestion() {
         Tabs or <span className="text-purple-600">spaces</span>?
       </h2>
       <div className="space-y-4 text-black">
-        {options.map((option) => (
+        {tabsSpacesOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}

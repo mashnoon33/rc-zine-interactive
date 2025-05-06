@@ -1,17 +1,25 @@
 'use client';
 
+// React imports
+import { useCallback } from "react";
+
+// App imports
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 import { QuestionKey, QUESTION_KEYS } from '@/types';
-import { useCallback } from "react";
 import { FortuneGenerator } from './FortuneGenerator';
-import { options as energyOptions } from './EnergyQuestion';
-import { options as tabsSpacesOptions } from './TabsSpacesQuestion';
-import { options as devEnvironmentOptions } from './DevEnvironmentQuestion';
-import { options as colorPickerOptions } from './ColorPickerQuestion';
-import { options as languageOptions } from './LanguageQuestion';
-import { options as pairingOptions } from './PairingQuestion';
-import { options as rageQuitOptions } from './RageQuitQuestion';
-import { options as springEmojiOptions } from './SpringEmojiQuestion';
+
+// Question options
+import {
+  energyOptions,
+  tabsSpacesOptions,
+  devEnvironmentOptions,
+  colorPickerOptions,
+  languageOptions,
+  pairingOptions,
+  rageQuitOptions,
+  springEmojiOptions,
+  debuggingSoundtrackOptions
+} from './consts';
 
 // Map of question IDs to their options
 const QUESTION_OPTIONS: Partial<Record<QuestionKey, typeof energyOptions>> = {
@@ -23,6 +31,7 @@ const QUESTION_OPTIONS: Partial<Record<QuestionKey, typeof energyOptions>> = {
   [QUESTION_KEYS.PAIRING]: pairingOptions,
   [QUESTION_KEYS.RAGE_QUIT]: rageQuitOptions,
   [QUESTION_KEYS.SPRING_EMOJI]: springEmojiOptions,
+  [QUESTION_KEYS.DEBUGGING_SOUNDTRACK]: debuggingSoundtrackOptions,
 } as const;
 
 export default function ResultsQuestion() {

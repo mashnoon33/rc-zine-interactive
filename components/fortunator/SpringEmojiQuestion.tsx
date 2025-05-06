@@ -1,16 +1,39 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
+import { BarChartComponent } from '@/components/ui/bar-chart';
+import { springEmojiOptions } from './consts';
 
-export const options = [
-  { id: '🌸', label: '🌸 Cherry Blossoms' },
-  { id: '🌱', label: '🌱 New Beginnings' },
-  { id: '🌷', label: '🌷 Tulips' },
-  { id: '🦋', label: '🦋 Butterflies' },
-  // { id: '🐝', label: '🐝 Bees' },
-  { id: '🌞', label: '🌞 Sunny Days' },
-  { id: '🤧', label: '🤧 Allergy Szn' },
-];
+export function Visualization({ data }: { data: string[] }) {
+  // Count occurrences of each emoji
+  const counts = data.reduce((acc, emoji) => {
+    acc[emoji] = (acc[emoji] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Format data for the bar chart
+  const chartData = Object.entries(counts).map(([emoji, count]) => ({
+    emoji,
+    count
+  }));
+
+  const config = {
+    count: {
+      label: 'Responses',
+      color: 'purple'
+    }
+  };
+
+  return (
+    <BarChartComponent
+      data={chartData}
+      config={config}
+      title="Spring Emoji Responses"
+      description="Distribution of spring emoji selections"
+      dataKey="emoji"
+    />
+  );
+}
 
 export default function SpringEmojiQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
@@ -32,7 +55,7 @@ export default function SpringEmojiQuestion() {
         ))}
       </h2>
       <div className="grid grid-cols-2 gap-4">
-        {options.map((option) => (
+        {springEmojiOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}

@@ -1,21 +1,7 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
-
-export const options = [
-  { id: 'red', label: '#FF0000' },
-  { id: 'orange', label: '#FFA500' },
-  { id: 'yellow', label: '#FFFF00' },
-  { id: 'green', label: '#00FF00' },
-  { id: 'blue', label: '#0000FF' },
-  { id: 'purple', label: '#800080' },
-  { id: 'pink', label: '#FFC0CB' },
-  { id: 'brown', label: '#A52A2A' },
-  { id: 'black', label: '#000000' },
-  { id: 'white', label: '#FFFFFF' },
-  { id: 'gray', label: '#808080' },
-  { id: 'teal', label: '#008080' },
-];
+import { colorPickerOptions } from './consts';
 
 export default function ColorPickerQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
@@ -37,7 +23,7 @@ export default function ColorPickerQuestion() {
         ))}
       </h2>
       <div className="grid grid-cols-4 gap-4">
-        {options.map((color) => (
+        {colorPickerOptions.map((color) => (
           <button
             key={color.id}
             onClick={() => handleSelect(color.id)}

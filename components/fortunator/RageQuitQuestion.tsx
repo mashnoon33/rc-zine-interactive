@@ -1,13 +1,7 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
-
-export const options = [
-  { id: 'slam', label: '💥 Slam the laptop shut' },
-  { id: 'walk', label: '🚶 Take a long walk' },
-  { id: 'tea', label: '🫖 Make a cup of tea' },
-  { id: 'never', label: '😌 I never rage quit' },
-];
+import { rageQuitOptions } from './consts';
 
 export default function RageQuitQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
@@ -29,7 +23,7 @@ export default function RageQuitQuestion() {
         ))}
       </h2>
       <div className="space-y-4 text-black">
-        {options.map((option) => (
+        {rageQuitOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}

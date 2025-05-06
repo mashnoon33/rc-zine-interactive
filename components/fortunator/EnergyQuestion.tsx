@@ -1,13 +1,7 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
-
-export const options = [
-  { id: 'ferret', label: '🐾 Ferret on espresso' },
-  { id: 'duck', label: '🦆 Duck on pond' },
-  { id: 'ikea', label: '🪑 IKEA furniture in progress' },
-  { id: 'npe', label: '💥 NullPointerException' },
-];
+import { energyOptions } from './consts';
 
 export default function EnergyQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
@@ -29,7 +23,7 @@ export default function EnergyQuestion() {
         ))}
       </h2>
       <div className="space-y-4 text-black">
-        {options.map((option) => (
+        {energyOptions.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}

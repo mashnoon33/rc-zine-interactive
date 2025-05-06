@@ -29,6 +29,7 @@ interface BarChartProps {
     label: string
   }
   footerText?: string
+  dataKey?: string
 }
 
 export function BarChartComponent({
@@ -38,6 +39,7 @@ export function BarChartComponent({
   description,
   trend,
   footerText,
+  dataKey = "month"
 }: BarChartProps) {
   return (
     <Card>
@@ -50,7 +52,7 @@ export function BarChartComponent({
           <BarChart accessibilityLayer data={data}>
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey={dataKey}
               tickLine={false}
               tickMargin={10}
               axisLine={false}

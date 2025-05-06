@@ -43,3 +43,10 @@ export type Question = {
   prompt: string;
   highlight: string;
 }
+
+export type GroupedSubmissions = {
+  [key in QuestionKey]: {
+    question_id: QuestionKey;
+    answers: string[];
+  };
+};
