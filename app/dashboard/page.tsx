@@ -3,10 +3,12 @@
 import { useEffect, useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { Tables } from '@/types/database.types';
-import { Visualization } from '@/components/fortunator/SpringEmojiQuestion';
+import { Visualization as SpringEmojiViz } from '@/components/fortunator/SpringEmojiQuestion';
+import { Visualization as EnergyViz } from '@/components/fortunator/EnergyQuestion';
+import { Visualization as DevEnvViz } from '@/components/fortunator/DevEnvironmentQuestion';
+import { Visualization as LanguageViz } from '@/components/fortunator/LanguageQuestion';
 
 type Submission = Tables<'submissions'>;
-
 
 export default function DashboardPage() {
   const [submissions, setSubmissions] = useState<Submission[]>([]);
@@ -67,14 +69,37 @@ export default function DashboardPage() {
 
   return (
     <div className="p-4 space-y-8">
-      <h1 className="text-2xl font-bold mb-4">Submissions</h1>
+      <h1 className="text-2xl font-bold mb-4">Developer Insights Dashboard</h1>
       
-      {/* Spring Emoji Visualization */}
-      {groupedSubmissions['spring_emoji'] && (
-        <div className="mb-8">
-          <Visualization data={groupedSubmissions['spring_emoji'].answers} />
-        </div>
-      )}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Energy Level Visualization */}
+        {groupedSubmissions['energy'] && (
+          <div>
+            <EnergyViz data={groupedSubmissions['energy'].answers} />
+          </div>
+        )}
+
+        {/* Development Environment Visualization */}
+        {groupedSubmissions['dev_environment'] && (
+          <div>
+            <DevEnvViz data={groupedSubmissions['dev_environment'].answers} />
+          </div>
+        )}
+
+        {/* Programming Language Visualization */}
+        {groupedSubmissions['favorite_language'] && (
+          <div>
+            <LanguageViz data={groupedSubmissions['favorite_language'].answers} />
+          </div>
+        )}
+
+        {/* Spring Emoji Visualization */}
+        {groupedSubmissions['spring_emoji'] && (
+          <div>
+            <SpringEmojiViz data={groupedSubmissions['spring_emoji'].answers} />
+          </div>
+        )}
+      </div>
 
       {/* Raw Data Display */}
       <div>

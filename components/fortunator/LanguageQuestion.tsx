@@ -1,7 +1,39 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
+import { BarChartComponent } from '@/components/ui/bar-chart';
 import { languageOptions } from './consts';
+
+export function Visualization({ data }: { data: string[] }) {
+  // Count occurrences of each programming language
+  const counts = data.reduce((acc, lang) => {
+    acc[lang] = (acc[lang] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Format data for the bar chart
+  const chartData = Object.entries(counts).map(([lang, count]) => ({
+    lang,
+    count
+  }));
+
+  const config = {
+    count: {
+      label: 'Responses',
+      color: 'purple'
+    }
+  };
+
+  return (
+    <BarChartComponent
+      data={chartData}
+      config={config}
+      title="Favorite Programming Languages"
+      description="Distribution of preferred programming languages"
+      dataKey="lang"
+    />
+  );
+}
 
 export default function LanguageQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();

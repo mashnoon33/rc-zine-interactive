@@ -1,7 +1,39 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
+import { BarChartComponent } from '@/components/ui/bar-chart';
 import { devEnvironmentOptions } from './consts';
+
+export function Visualization({ data }: { data: string[] }) {
+  // Count occurrences of each environment type
+  const counts = data.reduce((acc, env) => {
+    acc[env] = (acc[env] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Format data for the bar chart
+  const chartData = Object.entries(counts).map(([env, count]) => ({
+    env,
+    count
+  }));
+
+  const config = {
+    count: {
+      label: 'Responses',
+      color: 'purple'
+    }
+  };
+
+  return (
+    <BarChartComponent
+      data={chartData}
+      config={config}
+      title="Development Environment Metaphors"
+      description="How developers view their coding environment"
+      dataKey="env"
+    />
+  );
+}
 
 export default function DevEnvironmentQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();

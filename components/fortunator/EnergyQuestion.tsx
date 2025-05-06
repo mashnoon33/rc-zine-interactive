@@ -1,7 +1,39 @@
 'use client';
 
 import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
+import { BarChartComponent } from '@/components/ui/bar-chart';
 import { energyOptions } from './consts';
+
+export function Visualization({ data }: { data: string[] }) {
+  // Count occurrences of each energy level
+  const counts = data.reduce((acc, energy) => {
+    acc[energy] = (acc[energy] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+
+  // Format data for the bar chart
+  const chartData = Object.entries(counts).map(([energy, count]) => ({
+    energy,
+    count
+  }));
+
+  const config = {
+    count: {
+      label: 'Responses',
+      color: 'purple'
+    }
+  };
+
+  return (
+    <BarChartComponent
+      data={chartData}
+      config={config}
+      title="Energy Level Distribution"
+      description="How developers describe their energy levels"
+      dataKey="energy"
+    />
+  );
+}
 
 export default function EnergyQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
