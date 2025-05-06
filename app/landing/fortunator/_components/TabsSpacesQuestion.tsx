@@ -3,9 +3,9 @@
 import { useFortunator } from '../layout';
 
 const options = [
-  { id: 'tabs', label: 'Tabs' },
-  { id: 'spaces', label: 'Spaces' },
-  { id: 'dont_at_me', label: "Don't @ me" },
+  { id: 'tabs', label: '↹ Tabs' },
+  { id: 'spaces', label: '␣ Spaces' },
+  { id: 'dont_at_me', label: "🤫 Don't @ me" },
 ];
 
 export default function TabsSpacesQuestion() {

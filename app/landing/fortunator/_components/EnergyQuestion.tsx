@@ -3,10 +3,10 @@
 import { useFortunator, QUESTIONS } from '../layout';
 
 const options = [
-  { id: 'ferret', label: 'Ferret on espresso' },
-  { id: 'duck', label: 'Duck on pond' },
-  { id: 'ikea', label: 'IKEA furniture in progress' },
-  { id: 'null', label: 'NullPointerException' },
+  { id: 'ferret', label: '🐾 Ferret on espresso' },
+  { id: 'duck', label: '🦆 Duck on pond' },
+  { id: 'ikea', label: '🪑 IKEA furniture in progress' },
+  { id: 'npe', label: '💥 NullPointerException' },
 ];
 
 export default function EnergyQuestion() {

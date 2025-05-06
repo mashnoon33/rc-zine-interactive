@@ -31,21 +31,21 @@ export const QUESTION_KEYS = {
 export type QuestionKey = typeof QUESTION_KEYS[keyof typeof QUESTION_KEYS];
 
 // Answer Types
-export type EnergyAnswer = 'ferret' | 'duck' | 'ikea' | 'null';
+export type EnergyAnswer = 'ferret' | 'duck' | 'ikea' | 'npe';
 export type TabsSpacesAnswer = 'tabs' | 'spaces' | 'dont_at_me';
 export type DevEnvironmentAnswer = 'garden' | 'bicycle' | 'haunted' | 'spreadsheet';
-export type LanguageAnswer = 'Rust' | 'JavaScript' | 'Python' | 'TypeScript' | 'Go' | 'Java' | 'C++' | 'Ruby' | 'PHP' | 'Swift';
+export type LanguageAnswer = 'rust' | 'javascript' | 'python' | 'typescript' | 'go' | 'java' | 'c++' | 'ruby' | 'php' | 'swift';
 export type PairingAnswer = 'yes' | 'no' | 'sometimes';
-export type RageQuitAnswer = 'silent' | 'loud' | 'never';
+export type RageQuitAnswer = 'slam' | 'walk' | 'tea' | 'never';
 export type DebuggingSoundtrackAnswer = 'classical' | 'rock' | 'silence' | 'podcast';
 
 // Answer Arrays
-export const ENERGY_OPTIONS: EnergyAnswer[] = ['ferret', 'duck', 'ikea', 'null'];
+export const ENERGY_OPTIONS: EnergyAnswer[] = ['ferret', 'duck', 'ikea', 'npe'];
 export const TABS_SPACES_OPTIONS: TabsSpacesAnswer[] = ['tabs', 'spaces', 'dont_at_me'];
 export const DEV_ENVIRONMENT_OPTIONS: DevEnvironmentAnswer[] = ['garden', 'bicycle', 'haunted', 'spreadsheet'];
-export const LANGUAGE_OPTIONS: LanguageAnswer[] = ['Rust', 'JavaScript', 'Python', 'TypeScript', 'Go', 'Java', 'C++', 'Ruby', 'PHP', 'Swift'];
+export const LANGUAGE_OPTIONS: LanguageAnswer[] = ['rust', 'javascript', 'python', 'typescript', 'go', 'java', 'c++', 'ruby', 'php', 'swift'];
 export const PAIRING_OPTIONS: PairingAnswer[] = ['yes', 'no', 'sometimes'];
-export const RAGE_QUIT_OPTIONS: RageQuitAnswer[] = ['silent', 'loud', 'never'];
+export const RAGE_QUIT_OPTIONS: RageQuitAnswer[] = ['slam', 'walk', 'tea', 'never'];
 export const DEBUGGING_SOUNDTRACK_OPTIONS: DebuggingSoundtrackAnswer[] = ['classical', 'rock', 'silence', 'podcast'];
 
 // Answer Labels
@@ -59,25 +59,77 @@ type AnswerLabels = {
   [QUESTION_KEYS.DEV_ENVIRONMENT]: {
     [K in DevEnvironmentAnswer]: string;
   };
+  [QUESTION_KEYS.PAIRING]: {
+    [K in PairingAnswer]: string;
+  };
+  [QUESTION_KEYS.RAGE_QUIT]: {
+    [K in RageQuitAnswer]: string;
+  };
+  [QUESTION_KEYS.DEBUGGING_SOUNDTRACK]: {
+    [K in DebuggingSoundtrackAnswer]: string;
+  };
+  [QUESTION_KEYS.SPRING_EMOJI]: {
+    [K in string]: string;
+  };
+  [QUESTION_KEYS.FAVORITE_LANGUAGE]: {
+    [K in LanguageAnswer]: string;
+  };
 };
 
 export const ANSWER_LABELS: AnswerLabels = {
   [QUESTION_KEYS.ENERGY]: {
-    ferret: 'Ferret on espresso',
-    duck: 'Duck on pond',
-    ikea: 'IKEA furniture in progress',
-    null: 'NullPointerException',
+    ferret: '🦫 Ferret on espresso',
+    duck: '🦆 Duck on pond',
+    ikea: '🪑 IKEA furniture in progress',
+    npe: '💥 NullPointerException',
   },
   [QUESTION_KEYS.TABS_SPACES]: {
-    tabs: 'Tabs',
-    spaces: 'Spaces',
-    dont_at_me: "Don't @ me",
+    tabs: '↹ Tabs',
+    spaces: '␣ Spaces',
+    dont_at_me: "🤫 Don't @ me",
   },
   [QUESTION_KEYS.DEV_ENVIRONMENT]: {
-    garden: 'An overgrown garden',
-    bicycle: 'A well-oiled bicycle',
-    haunted: 'A haunted house',
-    spreadsheet: 'A spreadsheet with feelings',
+    garden: '🌿 An overgrown garden',
+    bicycle: '🚲 A well-oiled bicycle',
+    haunted: '👻 A haunted house',
+    spreadsheet: '📊 A spreadsheet with feelings',
+  },
+  [QUESTION_KEYS.PAIRING]: {
+    yes: '🤝 Yes, I love it!',
+    no: '🎧 No, I prefer to code alone',
+    sometimes: '⚖️ Sometimes, depends on the task',
+  },
+  [QUESTION_KEYS.RAGE_QUIT]: {
+    slam: '💥 Slam the laptop shut',
+    walk: '🚶 Take a long walk',
+    tea: '🫖 Make a cup of tea',
+    never: '😌 I never rage quit',
+  },
+  [QUESTION_KEYS.DEBUGGING_SOUNDTRACK]: {
+    classical: '🎻 Classical music',
+    rock: '🎸 Rock music',
+    silence: '🤫 Complete silence',
+    podcast: '🎙️ A podcast',
+  },
+  [QUESTION_KEYS.SPRING_EMOJI]: {
+    '🌸': '🌸 Cherry Blossoms',
+    '🌱': '🌱 New Beginnings',
+    '🌷': '🌷 Tulips',
+    '🦋': '🦋 Butterflies',
+    '🌞': '🌞 Sunny Days',
+    '🤧': '🤧 Allergy Szn',
+  },
+  [QUESTION_KEYS.FAVORITE_LANGUAGE]: {
+    rust: '🦀 Rust',
+    javascript: '📜 JavaScript',
+    python: '🐍 Python',
+    typescript: '📘 TypeScript',
+    go: '🚀 Go',
+    java: '☕ Java',
+    'c++': '⚡ C++',
+    ruby: '💎 Ruby',
+    php: '🐘 PHP',
+    swift: '🦅 Swift',
   },
 } as const;
 
@@ -119,7 +171,7 @@ export const QUESTIONS: Question[] = [
   {
     id: QUESTION_KEYS.DEV_ENVIRONMENT,
     component: DevEnvironmentQuestion,
-    prompt: "Your dev environment is like a ...",
+    prompt: "Your dev environment is like ...",
     highlight: "dev environment",
   },
   {
@@ -149,8 +201,8 @@ export const QUESTIONS: Question[] = [
   {
     id: QUESTION_KEYS.SPRING_EMOJI,
     component: SpringEmojiQuestion,
-    prompt: "Pick a spring emoji that represents your mood",
-    highlight: "spring emoji",
+    prompt: "What emoji best describes your feelings about spring?",
+    highlight: "spring",
   },
   {
     id: QUESTION_KEYS.RESULTS,

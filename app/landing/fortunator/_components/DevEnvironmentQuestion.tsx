@@ -3,10 +3,10 @@
 import { useFortunator, QUESTIONS } from '../layout';
 
 const options = [
-  { id: 'garden', label: 'An overgrown garden' },
-  { id: 'bicycle', label: 'A well-oiled bicycle' },
-  { id: 'haunted', label: 'A haunted house' },
-  { id: 'spreadsheet', label: 'A spreadsheet with feelings' },
+  { id: 'garden', label: '🌿 An overgrown garden' },
+  { id: 'bicycle', label: '🚲 A well-oiled bicycle' },
+  { id: 'haunted', label: '👻 A haunted house' },
+  { id: 'spreadsheet', label: '📊 A spreadsheet with feelings' },
 ];
 
 export default function DevEnvironmentQuestion() {

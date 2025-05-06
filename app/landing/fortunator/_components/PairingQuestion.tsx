@@ -3,9 +3,9 @@
 import { useFortunator, QUESTIONS } from '../layout';
 
 const options = [
-  { id: 'yes', label: 'Yes, I love it!' },
-  { id: 'no', label: 'No, I prefer to code alone' },
-  { id: 'sometimes', label: 'Sometimes, depends on the task' },
+  { id: 'yes', label: '🤝 Yes, I love it!' },
+  { id: 'no', label: '🎧 No, I prefer to code alone' },
+  { id: 'sometimes', label: '⚖️ Sometimes, depends on the task' },
 ];
 
 export default function PairingQuestion() {

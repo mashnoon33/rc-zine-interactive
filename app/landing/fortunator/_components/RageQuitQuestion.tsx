@@ -3,10 +3,10 @@
 import { useFortunator, QUESTIONS } from '../layout';
 
 const options = [
-  { id: 'slam', label: 'Slam the laptop shut' },
-  { id: 'walk', label: 'Take a long walk' },
-  { id: 'tea', label: 'Make a cup of tea' },
-  { id: 'never', label: 'I never rage quit' },
+  { id: 'slam', label: '💥 Slam the laptop shut' },
+  { id: 'walk', label: '🚶 Take a long walk' },
+  { id: 'tea', label: '🫖 Make a cup of tea' },
+  { id: 'never', label: '😌 I never rage quit' },
 ];
 
 export default function RageQuitQuestion() {

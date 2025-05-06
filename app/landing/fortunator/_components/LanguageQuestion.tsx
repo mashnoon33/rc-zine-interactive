@@ -3,10 +3,10 @@
 import { useFortunator, QUESTIONS } from '../layout';
 
 const languages = [
-  { id: 'python', label: 'Python' },
-  { id: 'rust', label: 'Rust' },
-  { id: 'go', label: 'Go' },
-  { id: 'typescript', label: 'TypeScript' },
+  { id: 'python', label: '🐍 Python' },
+  { id: 'rust', label: '🦀 Rust' },
+  { id: 'go', label: '🚀 Go' },
+  { id: 'typescript', label: '📘 TypeScript' },
 ];
 
 export default function LanguageQuestion() {

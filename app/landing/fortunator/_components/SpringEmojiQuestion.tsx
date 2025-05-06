@@ -3,12 +3,13 @@
 import { useFortunator, QUESTIONS } from '../layout';
 
 const options = [
-  { id: '🌸', label: '🌸 Cherry Blossom' },
-  { id: '🌱', label: '🌱 Seedling' },
-  { id: '🌷', label: '🌷 Tulip' },
-  { id: '🦋', label: '🦋 Butterfly' },
-  { id: '🐝', label: '🐝 Bee' },
-  { id: '🌞', label: '🌞 Sun' },
+  { id: '🌸', label: '🌸 Cherry Blossoms' },
+  { id: '🌱', label: '🌱 New Beginnings' },
+  { id: '🌷', label: '🌷 Tulips' },
+  { id: '🦋', label: '🦋 Butterflies' },
+  // { id: '🐝', label: '🐝 Bees' },
+  { id: '🌞', label: '🌞 Sunny Days' },
+  { id: '🤧', label: '🤧 Allergy Szn' },
 ];
 
 export default function SpringEmojiQuestion() {
@@ -35,7 +36,7 @@ export default function SpringEmojiQuestion() {
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}
-            className="p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200 text-2xl"
+            className="p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
           >
             {option.label}
           </button>
