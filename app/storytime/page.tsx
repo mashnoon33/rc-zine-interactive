@@ -31,6 +31,44 @@ export default function StoryTime() {
     coding: "You've just woken up to find your computer crashed overnight. Problem? You fell asleep before you had a chance to commit the last 24 hours of code you've been toiling at.",
   };
 
+  // Load initial story from database
+  useEffect(() => {
+    const loadInitialStory = async () => {
+      if (!selectedTheme) return;
+
+      const { data: existingStory, error } = await supabase
+        .from('story')
+        .select('*')
+        .eq('type', selectedTheme)
+        .order('created_at', { ascending: false })
+        .limit(1)
+        .single();
+
+      if (error) {
+        console.error('Error loading story:', error);
+        return;
+      }
+
+      if (existingStory) {
+        setStory(existingStory.story);
+      } else {
+        // Create new story entry if it doesn't exist
+        const newStory = [initialPrompts[selectedTheme]];
+        const { error: insertError } = await supabase
+          .from('story')
+          .insert([{ type: selectedTheme, story: newStory }]);
+        
+        if (insertError) {
+          console.error('Error creating story:', insertError);
+        } else {
+          setStory(newStory);
+        }
+      }
+    };
+
+    loadInitialStory();
+  }, [selectedTheme]);
+
   // Subscribe to story updates
   useEffect(() => {
     if (!selectedTheme) return;
@@ -111,32 +149,9 @@ export default function StoryTime() {
     }
   };
 
-  const handleThemeSelect = async (theme: Theme) => {
+  const handleThemeSelect = (theme: Theme) => {
     console.log('Theme selected:', theme);
     setSelectedTheme(theme);
-    
-    // Check if story exists for this theme
-    const { data: existingStory } = await supabase
-      .from('story')
-      .select('*')
-      .eq('type', theme)
-      .single();
-
-    if (existingStory) {
-      setStory(existingStory.story);
-    } else {
-      // Create new story entry
-      const newStory = [initialPrompts[theme]];
-      const { error } = await supabase
-        .from('story')
-        .insert([{ type: theme, story: newStory }]);
-      
-      if (error) {
-        console.error('Error creating story:', error);
-      } else {
-        setStory(newStory);
-      }
-    }
   };
 
   const handleContinuationSelect = async (continuation: StoryContinuation) => {
