@@ -33,10 +33,11 @@ const createPrompt = (name: string, answers: Record<string, any>) => {
   const hasNoPreferences = Object.values(answers).every(value => value === undefined);
   
   if (hasNoPreferences) {
-    return `Generate an encouraging fortune for a new coder starting their journey. The fortune should be optimistic and inspiring, focusing on the potential and possibilities of learning to code. Keep it under 2 sentences.
+    return `Generate a encouraging, maybe slightly sarcastic, definitely funny fortune for an engineering retreat participant. 
     Then, generate a haiku that captures the same sentiment and meaning as the fortune. The haiku should follow the traditional 5-7-5 syllable pattern.
     Format your response as:
     FORTUNE: [your fortune here]
+    ---
     HAIKU:
     [first line]
     [second line]
@@ -44,21 +45,17 @@ const createPrompt = (name: string, answers: Record<string, any>) => {
   }
 
   return `Based on these developer preferences:
-    Name: ${name || 'A new coder'}
     Energy Level: ${getAnswerLabel('energy', answers['energy'])}
-    Code Style: ${getAnswerLabel('tabs_spaces', answers['tabs_spaces'])}
     Development Environment: ${getAnswerLabel('dev_environment', answers['dev_environment'])}
     Spring Emoji: ${answers['spring_emoji'] || '🌱'}
     Mood Color: ${answers['mood_color'] || 'rainbow'}
-    Favorite Language: ${answers['favorite_language'] || 'the one you choose'}
-    Pairing Preference: ${answers['pairing'] || 'open to collaboration'}
+    A language they picked must go: ${answers['favorite_language'] || 'the one you choose'}
     Rage Quit Style: ${answers['rage_quit'] || 'never'}
-    Debugging Soundtrack: ${answers['debugging_soundtrack'] || 'the sound of success'}
-    First, generate a short, optimistic, and encouraging fortune about their coding future. Keep it under 2 sentences.
-    Then, generate a haiku that captures the same sentiment and meaning as the fortune. The haiku should follow the traditional 5-7-5 syllable pattern.
+    Generate a short, encouraging fortune about their coding future that incorporates their preferences. Keep it under 2 sentences and make it slightly sarcastic, very funny but ultimately positive.
+    Then, create a haiku that mirrors the fortune's sentiment, following the traditional 5-7-5 syllable pattern.
     Format your response as:
-    FORTUNE: [your fortune here]
-    HAIKU:
+    [your fortune here]
+    ---
     [first line]
     [second line]
     [third line]`;
@@ -66,7 +63,7 @@ const createPrompt = (name: string, answers: Record<string, any>) => {
 
 const parseResponse = (text: string) => {
   // Split the text into fortune and haiku parts
-  const parts = text.split('In Haiku Form');
+  const parts = text.split('---');
   
   // Extract the fortune (remove any leading/trailing text)
   const fortuneText = parts[0]
