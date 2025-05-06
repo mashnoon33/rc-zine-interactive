@@ -16,7 +16,10 @@ export default function LandingPage() {
                         </h1>
                     </Link>
                     <p className="text-xl md:text-2xl text-gray-600 mb-6">
-                        Choose your adventure
+                        Choose your adventure or{' '}
+                        <Link href="/dashboard" className="text-purple-600 hover:text-purple-700 underline">
+                            View live results
+                        </Link>
                     </p>
                 </div>
             </div>
