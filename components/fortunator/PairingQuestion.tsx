@@ -1,20 +1,19 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../layout';
+import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 
-const options = [
-  { id: 'garden', label: '🌿 An overgrown garden' },
-  { id: 'bicycle', label: '🚲 A well-oiled bicycle' },
-  { id: 'haunted', label: '👻 A haunted house' },
-  { id: 'spreadsheet', label: '📊 A spreadsheet with feelings' },
+export const options = [
+  { id: 'yes', label: '🤝 Yes, I love it!' },
+  { id: 'no', label: '🎧 No, I prefer to code alone' },
+  { id: 'sometimes', label: '⚖️ Sometimes, depends on the task' },
 ];
 
-export default function DevEnvironmentQuestion() {
+export default function PairingQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
   const question = QUESTIONS[currentQuestion];
 
   const handleSelect = (optionId: string) => {
-    setAnswer('dev_environment', optionId);
+    setAnswer('pairing', optionId);
     nextQuestion();
   };
 

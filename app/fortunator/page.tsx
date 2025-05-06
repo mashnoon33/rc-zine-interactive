@@ -1,7 +1,7 @@
 'use client';
 
 import { useFortunator } from './layout';
-import NameInput from './_components/NameInput';
+import NameInput from '../../components/fortunator/NameInput';
 
 export default function FortunatorPage() {
     const { name } = useFortunator();

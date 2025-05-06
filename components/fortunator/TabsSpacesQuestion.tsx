@@ -1,26 +1,25 @@
 'use client';
 
-import { useFortunator } from '../layout';
+import { useFortunator } from '../../app/fortunator/layout';
 
-const options = [
-  { id: 'classical', label: 'Classical music' },
-  { id: 'rock', label: 'Rock music' },
-  { id: 'silence', label: 'Complete silence' },
-  { id: 'podcast', label: 'A podcast' },
+export const options = [
+  { id: 'tabs', label: '↹ Tabs' },
+  { id: 'spaces', label: '␣ Spaces' },
+  { id: 'dont_at_me', label: "🤫 Don't @ me" },
 ];
 
-export default function DebuggingSoundtrackQuestion() {
-  const { setAnswer, nextQuestion } = useFortunator();
+export default function TabsSpacesQuestion() {
+  const { setAnswer, setCurrentQuestion } = useFortunator();
 
   const handleSelect = (optionId: string) => {
-    setAnswer('debugging_soundtrack', optionId);
-    nextQuestion();
+    setAnswer('tabs_spaces', optionId);
+    setCurrentQuestion(2);
   };
 
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold text-gray-900">
-        Your debugging <span className="text-purple-600">soundtrack</span> is...
+        Tabs or <span className="text-purple-600">spaces</span>?
       </h2>
       <div className="space-y-4 text-black">
         {options.map((option) => (

@@ -1,7 +1,8 @@
 'use client';
 
-import { useFortunator, ANSWER_LABELS, QuestionKey } from '../layout';
+import { QuestionKey } from "@/types";
 import { useEffect, useState } from "react";
+import { useFortunator } from "../layout";
 
 function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, any>> }) {
   const [fortune, setFortune] = useState<string>("");
@@ -9,11 +10,7 @@ function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, an
   const [loading, setLoading] = useState(true);
   const { name } = useFortunator();
 
-  const getAnswerLabel = (questionId: QuestionKey, value: any) => {
-    if (!value) return '';
-    const labels = ANSWER_LABELS[questionId as keyof typeof ANSWER_LABELS];
-    return labels ? labels[value as keyof typeof labels] || value : value;
-  };
+
 
   useEffect(() => {
     generateFortune(name, answers, setFortune, setHaiku, setLoading);
@@ -113,11 +110,7 @@ function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, an
 export default function ResultsPage() {
   const { answers } = useFortunator();
 
-  const getAnswerLabel = (questionId: QuestionKey, value: any) => {
-    if (!value) return '';
-    const labels = ANSWER_LABELS[questionId as keyof typeof ANSWER_LABELS];
-    return labels ? labels[value as keyof typeof labels] || value : value;
-  };
+
 
   return (
     <div className="space-y-8">
@@ -133,7 +126,7 @@ export default function ResultsPage() {
                   {questionId.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
                 </h4>
                 <p className="text-gray-600">
-                  {getAnswerLabel(questionId as QuestionKey, value)}
+                  {value}
                 </p>
               </div>
             ))}

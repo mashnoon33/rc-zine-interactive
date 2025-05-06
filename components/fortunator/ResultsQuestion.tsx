@@ -1,16 +1,41 @@
 'use client';
 
-import { useFortunator, ANSWER_LABELS, QuestionKey, QUESTIONS } from '../layout';
+import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
+import { QuestionKey, QUESTION_KEYS } from '@/types';
 import { useCallback } from "react";
 import { FortuneGenerator } from './FortuneGenerator';
+import { options as energyOptions } from './EnergyQuestion';
+import { options as tabsSpacesOptions } from './TabsSpacesQuestion';
+import { options as devEnvironmentOptions } from './DevEnvironmentQuestion';
+import { options as colorPickerOptions } from './ColorPickerQuestion';
+import { options as languageOptions } from './LanguageQuestion';
+import { options as pairingOptions } from './PairingQuestion';
+import { options as rageQuitOptions } from './RageQuitQuestion';
+import { options as springEmojiOptions } from './SpringEmojiQuestion';
+
+// Map of question IDs to their options
+const QUESTION_OPTIONS: Partial<Record<QuestionKey, typeof energyOptions>> = {
+  [QUESTION_KEYS.ENERGY]: energyOptions,
+  [QUESTION_KEYS.TABS_SPACES]: tabsSpacesOptions,
+  [QUESTION_KEYS.DEV_ENVIRONMENT]: devEnvironmentOptions,
+  [QUESTION_KEYS.MOOD_COLOR]: colorPickerOptions,
+  [QUESTION_KEYS.FAVORITE_LANGUAGE]: languageOptions,
+  [QUESTION_KEYS.PAIRING]: pairingOptions,
+  [QUESTION_KEYS.RAGE_QUIT]: rageQuitOptions,
+  [QUESTION_KEYS.SPRING_EMOJI]: springEmojiOptions,
+} as const;
 
 export default function ResultsQuestion() {
   const { answers } = useFortunator();
 
   const getAnswerLabel = useCallback((questionId: QuestionKey, value: any) => {
     if (!value) return '';
-    const labels = ANSWER_LABELS[questionId as keyof typeof ANSWER_LABELS];
-    return labels ? labels[value as keyof typeof labels] || value : value;
+    
+    const options = QUESTION_OPTIONS[questionId];
+    if (!options) return value;
+
+    const option = options.find(opt => opt.id === value);
+    return option?.label || value;
   }, []);
 
   return (

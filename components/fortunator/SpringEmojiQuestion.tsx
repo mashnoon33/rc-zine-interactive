@@ -1,20 +1,23 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../layout';
+import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 
-const options = [
-  { id: 'slam', label: '💥 Slam the laptop shut' },
-  { id: 'walk', label: '🚶 Take a long walk' },
-  { id: 'tea', label: '🫖 Make a cup of tea' },
-  { id: 'never', label: '😌 I never rage quit' },
+export const options = [
+  { id: '🌸', label: '🌸 Cherry Blossoms' },
+  { id: '🌱', label: '🌱 New Beginnings' },
+  { id: '🌷', label: '🌷 Tulips' },
+  { id: '🦋', label: '🦋 Butterflies' },
+  // { id: '🐝', label: '🐝 Bees' },
+  { id: '🌞', label: '🌞 Sunny Days' },
+  { id: '🤧', label: '🤧 Allergy Szn' },
 ];
 
-export default function RageQuitQuestion() {
+export default function SpringEmojiQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
   const question = QUESTIONS[currentQuestion];
 
   const handleSelect = (optionId: string) => {
-    setAnswer('rage_quit', optionId);
+    setAnswer('spring_emoji', optionId);
     nextQuestion();
   };
 
@@ -28,12 +31,12 @@ export default function RageQuitQuestion() {
           </>
         ))}
       </h2>
-      <div className="space-y-4 text-black">
+      <div className="grid grid-cols-2 gap-4">
         {options.map((option) => (
           <button
             key={option.id}
             onClick={() => handleSelect(option.id)}
-            className="w-full p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
+            className="p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
           >
             {option.label}
           </button>

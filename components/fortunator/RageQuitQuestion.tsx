@@ -1,20 +1,20 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../layout';
+import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 
-const options = [
-  { id: 'ferret', label: '🐾 Ferret on espresso' },
-  { id: 'duck', label: '🦆 Duck on pond' },
-  { id: 'ikea', label: '🪑 IKEA furniture in progress' },
-  { id: 'npe', label: '💥 NullPointerException' },
+export const options = [
+  { id: 'slam', label: '💥 Slam the laptop shut' },
+  { id: 'walk', label: '🚶 Take a long walk' },
+  { id: 'tea', label: '🫖 Make a cup of tea' },
+  { id: 'never', label: '😌 I never rage quit' },
 ];
 
-export default function EnergyQuestion() {
+export default function RageQuitQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
   const question = QUESTIONS[currentQuestion];
 
   const handleSelect = (optionId: string) => {
-    setAnswer('energy', optionId);
+    setAnswer('rage_quit', optionId);
     nextQuestion();
   };
 

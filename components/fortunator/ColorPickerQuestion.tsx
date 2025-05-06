@@ -1,20 +1,20 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../layout';
+import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 
-const colors = [
-  { id: 'red', hex: '#FF0000' },
-  { id: 'orange', hex: '#FFA500' },
-  { id: 'yellow', hex: '#FFFF00' },
-  { id: 'green', hex: '#00FF00' },
-  { id: 'blue', hex: '#0000FF' },
-  { id: 'purple', hex: '#800080' },
-  { id: 'pink', hex: '#FFC0CB' },
-  { id: 'brown', hex: '#A52A2A' },
-  { id: 'black', hex: '#000000' },
-  { id: 'white', hex: '#FFFFFF' },
-  { id: 'gray', hex: '#808080' },
-  { id: 'teal', hex: '#008080' },
+export const options = [
+  { id: 'red', label: '#FF0000' },
+  { id: 'orange', label: '#FFA500' },
+  { id: 'yellow', label: '#FFFF00' },
+  { id: 'green', label: '#00FF00' },
+  { id: 'blue', label: '#0000FF' },
+  { id: 'purple', label: '#800080' },
+  { id: 'pink', label: '#FFC0CB' },
+  { id: 'brown', label: '#A52A2A' },
+  { id: 'black', label: '#000000' },
+  { id: 'white', label: '#FFFFFF' },
+  { id: 'gray', label: '#808080' },
+  { id: 'teal', label: '#008080' },
 ];
 
 export default function ColorPickerQuestion() {
@@ -37,12 +37,12 @@ export default function ColorPickerQuestion() {
         ))}
       </h2>
       <div className="grid grid-cols-4 gap-4">
-        {colors.map((color) => (
+        {options.map((color) => (
           <button
             key={color.id}
             onClick={() => handleSelect(color.id)}
             className="aspect-square rounded-lg border-2 border-gray-200 hover:border-purple-500 transition-all duration-200"
-            style={{ backgroundColor: color.hex }}
+            style={{ backgroundColor: color.label }}
             title={color.id}
           />
         ))}

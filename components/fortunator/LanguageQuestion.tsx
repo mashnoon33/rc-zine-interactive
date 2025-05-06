@@ -1,23 +1,20 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../layout';
+import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 
-const options = [
-  { id: '🌸', label: '🌸 Cherry Blossoms' },
-  { id: '🌱', label: '🌱 New Beginnings' },
-  { id: '🌷', label: '🌷 Tulips' },
-  { id: '🦋', label: '🦋 Butterflies' },
-  // { id: '🐝', label: '🐝 Bees' },
-  { id: '🌞', label: '🌞 Sunny Days' },
-  { id: '🤧', label: '🤧 Allergy Szn' },
+export const options = [
+  { id: 'python', label: '🐍 Python' },
+  { id: 'rust', label: '🦀 Rust' },
+  { id: 'go', label: '🚀 Go' },
+  { id: 'typescript', label: '📘 TypeScript' },
 ];
 
-export default function SpringEmojiQuestion() {
+export default function LanguageQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();
   const question = QUESTIONS[currentQuestion];
 
-  const handleSelect = (optionId: string) => {
-    setAnswer('spring_emoji', optionId);
+  const handleSelect = (languageId: string) => {
+    setAnswer('favorite_language', languageId);
     nextQuestion();
   };
 
@@ -31,14 +28,14 @@ export default function SpringEmojiQuestion() {
           </>
         ))}
       </h2>
-      <div className="grid grid-cols-2 gap-4">
-        {options.map((option) => (
+      <div className="grid grid-cols-3 gap-4">
+        {options.map((language) => (
           <button
-            key={option.id}
-            onClick={() => handleSelect(option.id)}
+            key={language.id}
+            onClick={() => handleSelect(language.id)}
             className="p-4 text-left border rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-all duration-200"
           >
-            {option.label}
+            {language.label}
           </button>
         ))}
       </div>
