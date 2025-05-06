@@ -25,18 +25,18 @@ export default function LandingPage() {
             </div>
 
             {/* Adventure Selection */}
-            <div className="flex flex-col md:flex-row flex-1">
+            <div className="grid grid-cols-1 md:grid-cols-2 flex-1">
                 <Link 
                     href="/fortunator" 
-                    className="group w-full md:w-1/2 bg-rose-300 flex items-center justify-center transition-transform transform hover:scale-105 hover:shadow-lg"
+                    className="group bg-rose-300 flex items-center justify-center transition-transform transform hover:scale-105 hover:shadow-lg h-[50vh]"
                 >
-                    <h2 className="text-6xl font-extrabold font-sans group-hover:text-white">🔮 The Fortunator</h2>
+                    <h2 className="text-4xl md:text-6xl font-extrabold font-sans group-hover:text-white">🔮 The Fortunator</h2>
                 </Link>
                 <Link 
                     href="/storytime" 
-                    className="group w-full md:w-1/2 bg-green-300 flex items-center justify-center transition-transform transform hover:scale-105 hover:shadow-lg"
+                    className="group bg-green-300 flex items-center justify-center transition-transform transform hover:scale-105 hover:shadow-lg h-[50vh]"
                 >
-                    <h2 className="text-6xl font-extrabold font-sans group-hover:text-white">✍️ Storytime</h2>
+                    <h2 className="text-4xl md:text-6xl font-extrabold font-sans group-hover:text-white">✍️ Storytime</h2>
                 </Link>
             </div>
         </div>
