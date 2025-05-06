@@ -18,11 +18,12 @@ import {
   pairingOptions,
   rageQuitOptions,
   springEmojiOptions,
-  debuggingSoundtrackOptions
+  debuggingSoundtrackOptions,
+  Option
 } from './consts';
 
 // Map of question IDs to their options
-const QUESTION_OPTIONS: Partial<Record<QuestionKey, typeof energyOptions>> = {
+const QUESTION_OPTIONS: Partial<Record<QuestionKey, Option[]>> = {
   [QUESTION_KEYS.ENERGY]: energyOptions,
   [QUESTION_KEYS.TABS_SPACES]: tabsSpacesOptions,
   [QUESTION_KEYS.DEV_ENVIRONMENT]: devEnvironmentOptions,

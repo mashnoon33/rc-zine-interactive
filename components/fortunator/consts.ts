@@ -1,8 +1,13 @@
-export const energyOptions = [
-  { id: 'ferret', label: '🐾 Ferret on espresso' },
-  { id: 'duck', label: '🦆 Duck on pond' },
-  { id: 'ikea', label: '🪑 IKEA furniture in progress' },
-  { id: 'npe', label: '💥 NullPointerException' },
+export interface Option {
+  id: string;
+  label: string;
+}
+
+export const energyOptions= [
+  { id: 'ferret', label: '🐾 Ferret on espresso', value: 10 },
+  { id: 'duck', label: '🦆 Duck on pond', value: 5 },
+  { id: 'ikea', label: '🪑 IKEA furniture in progress', value: 3 },
+  { id: 'npe', label: '💥 NullPointerException', value: 1 },
 ];
 
 export const tabsSpacesOptions = [

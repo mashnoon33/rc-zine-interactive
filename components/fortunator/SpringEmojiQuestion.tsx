@@ -3,35 +3,17 @@
 import { QUESTIONS, useFortunator } from './context';
 import { BarChartComponent } from '@/components/ui/bar-chart';
 import { springEmojiOptions } from './consts';
-
+import { Card, CardHeader } from '../ui/card';
 export function Visualization({ data }: { data: string[] }) {
   // Count occurrences of each emoji
-  const counts = data.reduce((acc, emoji) => {
-    acc[emoji] = (acc[emoji] || 0) + 1;
-    return acc;
-  }, {} as Record<string, number>);
-
-  // Format data for the bar chart
-  const chartData = Object.entries(counts).map(([emoji, count]) => ({
-    emoji,
-    count
-  }));
-
-  const config = {
-    count: {
-      label: 'Responses',
-      color: 'purple'
-    }
-  };
-
   return (
-    <BarChartComponent
-      data={chartData}
-      config={config}
-      title="Spring Emoji Responses"
-      description="Distribution of spring emoji selections"
-      dataKey="emoji"
-    />
+    <Card className="flex flex-wrap gap-4 p-4">
+      {data.map((emoji) => (
+        <div className="text-6xl" key={emoji}>
+          {emoji}
+        </div>
+      ))}
+    </Card>
   );
 }
 
