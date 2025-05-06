@@ -36,21 +36,20 @@ export default function StoryTime() {
     const loadInitialStory = async () => {
       if (!selectedTheme) return;
 
-      const { data: existingStory, error } = await supabase
+      const { data: existingStories, error } = await supabase
         .from('story')
         .select('*')
         .eq('type', selectedTheme)
         .order('created_at', { ascending: false })
-        .limit(1)
-        .single();
+        .limit(1);
 
       if (error) {
         console.error('Error loading story:', error);
         return;
       }
 
-      if (existingStory) {
-        setStory(existingStory.story);
+      if (existingStories && existingStories.length > 0) {
+        setStory(existingStories[0].story);
       } else {
         // Create new story entry if it doesn't exist
         const newStory = [initialPrompts[selectedTheme]];
