@@ -21,5 +21,9 @@
     "http",
     "net"
   ],
-  "dotenv.enableAutocloaking": false
+  "dotenv.enableAutocloaking": false,
+  "cSpell.words": [
+    "SUPABASE",
+    "VERCEL"
+  ]
 }
