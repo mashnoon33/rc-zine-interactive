@@ -21,6 +21,8 @@ import {
   debuggingSoundtrackOptions,
   Option
 } from './consts';
+import { Button } from "../ui/button";
+import { useRouter } from "next/navigation";
 
 // Map of question IDs to their options
 const QUESTION_OPTIONS: Partial<Record<QuestionKey, Option[]>> = {
@@ -37,7 +39,7 @@ const QUESTION_OPTIONS: Partial<Record<QuestionKey, Option[]>> = {
 
 export default function ResultsQuestion() {
   const { answers } = useFortunator();
-
+  const router = useRouter();
   const getAnswerLabel = useCallback((questionId: QuestionKey, value: any) => {
     if (!value) return '';
     
@@ -50,6 +52,7 @@ export default function ResultsQuestion() {
 
   return (
     <div className="space-y-8">
+      <Button variant="outline" onClick={() => router.push('/')}>Back to home</Button>
       <h1 className="text-3xl font-bold text-gray-900">Your Fortunator Results</h1>
       <div className="space-y-6">
         <FortuneGenerator answers={answers} />
