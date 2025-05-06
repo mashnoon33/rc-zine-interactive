@@ -4,7 +4,7 @@
 import { useCallback } from "react";
 
 // App imports
-import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
+import { QUESTIONS, useFortunator } from './context';
 import { QuestionKey, QUESTION_KEYS } from '@/types';
 import { FortuneGenerator } from './FortuneGenerator';
 

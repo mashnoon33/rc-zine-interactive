@@ -1,6 +1,6 @@
 'use client';
 
-import { useFortunator } from '../../app/fortunator/layout';
+import { QUESTIONS, useFortunator } from './context';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 

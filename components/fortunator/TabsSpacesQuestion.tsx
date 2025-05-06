@@ -1,6 +1,6 @@
 'use client';
 
-import { useFortunator } from '../../app/fortunator/layout';
+import { QUESTIONS, useFortunator } from './context';
 import { tabsSpacesOptions } from './consts';
 
 export default function TabsSpacesQuestion() {

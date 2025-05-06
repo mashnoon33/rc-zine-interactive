@@ -1,6 +1,6 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
+import { QUESTIONS, useFortunator } from './context';
 import { BarChartComponent } from '@/components/ui/bar-chart';
 import { springEmojiOptions } from './consts';
 

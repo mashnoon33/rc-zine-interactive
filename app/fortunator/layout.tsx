@@ -2,83 +2,14 @@
 
 import { useUser } from '@/hooks/useUser';
 import {
-  FortunatorContextType,
-  Question,
-  QUESTION_KEYS,
   QuestionKey
 } from '@/types';
-import { createContext, ReactNode, useContext, useState } from 'react';
-import ColorPickerQuestion from '../../components/fortunator/ColorPickerQuestion';
-import DevEnvironmentQuestion from '../../components/fortunator/DevEnvironmentQuestion';
-import EnergyQuestion from '../../components/fortunator/EnergyQuestion';
-import LanguageQuestion from '../../components/fortunator/LanguageQuestion';
-import PairingQuestion from '../../components/fortunator/PairingQuestion';
+import { ReactNode, useState } from 'react';
 import ProgressBar from '../../components/fortunator/ProgressBar';
-import RageQuitQuestion from '../../components/fortunator/RageQuitQuestion';
-import ResultsQuestion from '../../components/fortunator/ResultsQuestion';
-import SpringEmojiQuestion from '../../components/fortunator/SpringEmojiQuestion';
-
-const FortunatorContext = createContext<FortunatorContextType | undefined>(undefined);
-
-export function useFortunator() {
-  const context = useContext(FortunatorContext);
-  if (!context) {
-    throw new Error('useFortunator must be used within a FortunatorProvider');
-  }
-  return context;
-}
+import { FortunatorContext, QUESTIONS } from '../../components/fortunator/context';
 
 // Question Components
-export const QUESTIONS: Question[] = [
-  {
-    id: QUESTION_KEYS.ENERGY,
-    component: EnergyQuestion,
-    prompt: "How would you describe your energy this week?",
-    highlight: "energy",
-  },
-  {
-    id: QUESTION_KEYS.DEV_ENVIRONMENT,
-    component: DevEnvironmentQuestion,
-    prompt: "Your dev environment is like ...",
-    highlight: "dev environment",
-  },
-  {
-    id: QUESTION_KEYS.MOOD_COLOR,
-    component: ColorPickerQuestion,
-    prompt: "Pick a color that matches your mood",
-    highlight: "color",
-  },
-  {
-    id: QUESTION_KEYS.FAVORITE_LANGUAGE,
-    component: LanguageQuestion,
-    prompt: "One of these must go...",
-    highlight: "must go",
-  },
-  {
-    id: QUESTION_KEYS.PAIRING,
-    component: PairingQuestion,
-    prompt: "Do you enjoy pair programming?",
-    highlight: "pair programming",
-  },
-  {
-    id: QUESTION_KEYS.RAGE_QUIT,
-    component: RageQuitQuestion,
-    prompt: "How do you rage quit?",
-    highlight: "rage quit",
-  },
-  {
-    id: QUESTION_KEYS.SPRING_EMOJI,
-    component: SpringEmojiQuestion,
-    prompt: "What emoji best describes your feelings about spring?",
-    highlight: "spring",
-  },
-  {
-    id: QUESTION_KEYS.RESULTS,
-    component: ResultsQuestion,
-    prompt: "Your Fortunator Results",
-    highlight: "",
-  },
-] as const;
+  
 
 export default function FortunatorLayout({
   children,

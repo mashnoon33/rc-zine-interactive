@@ -1,6 +1,6 @@
 'use client';
 
-import { useFortunator } from '../../app/fortunator/layout';
+import { useFortunator } from './context';
 
 const TOTAL_QUESTIONS = 10; // Update this as we add more questions
 

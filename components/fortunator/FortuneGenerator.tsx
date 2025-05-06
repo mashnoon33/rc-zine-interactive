@@ -3,7 +3,7 @@ import { useUser } from '@/hooks/useUser';
 import { useState, useCallback, useEffect } from 'react';
 import { saveFortune } from '../../app/fortunator/_hook/save-fortune';
 import { saveSurveyEntries } from '../../app/fortunator/_hook/save-survey-entry';
-import {  useFortunator } from '../../app/fortunator/layout';
+import { QUESTIONS, useFortunator } from './context';
 import { QuestionKey } from '@/types';
 
 const DEFAULT_FORTUNE = "Your coding journey will be filled with exciting discoveries and successful projects!";

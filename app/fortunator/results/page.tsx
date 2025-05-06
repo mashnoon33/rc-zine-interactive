@@ -1,8 +1,8 @@
 'use client';
 
+import { useFortunator } from "@/components/fortunator/context";
 import { QuestionKey } from "@/types";
 import { useEffect, useState } from "react";
-import { useFortunator } from "../layout";
 
 function FortuneGenerator({ answers }: { answers: Partial<Record<QuestionKey, any>> }) {
   const [fortune, setFortune] = useState<string>("");

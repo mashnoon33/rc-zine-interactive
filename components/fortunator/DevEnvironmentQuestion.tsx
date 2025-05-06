@@ -1,8 +1,8 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 import { BarChartComponent } from '@/components/ui/bar-chart';
 import { devEnvironmentOptions } from './consts';
+import { QUESTIONS, useFortunator } from './context';
 
 export function Visualization({ data }: { data: string[] }) {
   // Count occurrences of each environment type

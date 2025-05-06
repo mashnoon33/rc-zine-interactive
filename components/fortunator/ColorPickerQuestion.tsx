@@ -1,7 +1,7 @@
 'use client';
 
-import { useFortunator, QUESTIONS } from '../../app/fortunator/layout';
 import { colorPickerOptions } from './consts';
+import { QUESTIONS, useFortunator } from './context';
 
 export default function ColorPickerQuestion() {
   const { setAnswer, nextQuestion, currentQuestion } = useFortunator();

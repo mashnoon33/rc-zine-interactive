@@ -1,6 +1,6 @@
 'use client';
 
-import { useFortunator } from '../../app/fortunator/layout';
+import { useFortunator } from './context';
 import { debuggingSoundtrackOptions } from './consts';
 
 export default function DebuggingSoundtrackQuestion() {
