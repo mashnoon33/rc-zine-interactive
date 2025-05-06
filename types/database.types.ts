@@ -56,6 +56,27 @@ export type Database = {
         }
         Relationships: []
       }
+      story: {
+        Row: {
+          created_at: string
+          id: number
+          story: string[]
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          story: string[]
+          type: string
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          story?: string[]
+          type?: string
+        }
+        Relationships: []
+      }
       submissions: {
         Row: {
           answer_id: string

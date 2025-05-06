@@ -5,9 +5,13 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { createClient } from '@/utils/supabase/client';
+import { Database } from '@/types/database.types';
+import { RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 
 type Theme = 'spring' | 'coding';
 type Persona = 'conspiracy' | 'optimist' | 'pessimist';
+type Story = Database['public']['Tables']['story']['Row'];
 
 interface StoryContinuation {
   text: string;
@@ -20,11 +24,39 @@ export default function StoryTime() {
   const [userInput, setUserInput] = useState('');
   const [continuations, setContinuations] = useState<StoryContinuation[]>([]);
   const [isGenerating, setIsGenerating] = useState(false);
+  const supabase = createClient();
 
   const initialPrompts = {
     spring: "It's the first day of spring, and New York City is alive with a sunny blue sky and smell of fresh cherry blossoms.",
     coding: "You've just woken up to find your computer crashed overnight. Problem? You fell asleep before you had a chance to commit the last 24 hours of code you've been toiling at.",
   };
+
+  // Subscribe to story updates
+  useEffect(() => {
+    if (!selectedTheme) return;
+
+    const channel = supabase
+      .channel('story_updates')
+      .on(
+        'postgres_changes' as any,
+        {
+          event: '*',
+          schema: 'public',
+          table: 'story',
+          filter: `type=eq.${selectedTheme}`,
+        },
+        (payload: RealtimePostgresChangesPayload<Story>) => {
+          if (payload.new && 'story' in payload.new) {
+            setStory(payload.new.story);
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, [selectedTheme]);
 
   // Add effect to generate continuations when theme changes
   useEffect(() => {
@@ -79,22 +111,64 @@ export default function StoryTime() {
     }
   };
 
-  const handleThemeSelect = (theme: Theme) => {
+  const handleThemeSelect = async (theme: Theme) => {
     console.log('Theme selected:', theme);
     setSelectedTheme(theme);
-    setStory([initialPrompts[theme]]);
+    
+    // Check if story exists for this theme
+    const { data: existingStory } = await supabase
+      .from('story')
+      .select('*')
+      .eq('type', theme)
+      .single();
+
+    if (existingStory) {
+      setStory(existingStory.story);
+    } else {
+      // Create new story entry
+      const newStory = [initialPrompts[theme]];
+      const { error } = await supabase
+        .from('story')
+        .insert([{ type: theme, story: newStory }]);
+      
+      if (error) {
+        console.error('Error creating story:', error);
+      } else {
+        setStory(newStory);
+      }
+    }
   };
 
-  const handleContinuationSelect = (continuation: StoryContinuation) => {
+  const handleContinuationSelect = async (continuation: StoryContinuation) => {
     console.log('Continuation selected:', continuation);
-    setStory(prev => [...prev, continuation.text]);
+    const newStory = [...story, continuation.text];
+    
+    const { error } = await supabase
+      .from('story')
+      .update({ story: newStory })
+      .eq('type', selectedTheme);
+
+    if (error) {
+      console.error('Error updating story:', error);
+    }
+    
     setContinuations([]);
   };
 
-  const handleUserSubmit = () => {
+  const handleUserSubmit = async () => {
     if (userInput.trim()) {
       console.log('User submitted:', userInput);
-      setStory(prev => [...prev, userInput.trim()]);
+      const newStory = [...story, userInput.trim()];
+      
+      const { error } = await supabase
+        .from('story')
+        .update({ story: newStory })
+        .eq('type', selectedTheme);
+
+      if (error) {
+        console.error('Error updating story:', error);
+      }
+      
       setUserInput('');
       setContinuations([]);
     }
