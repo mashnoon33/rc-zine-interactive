@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Card } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { createClient } from '@/utils/supabase/client';
@@ -12,7 +12,22 @@ type Story = Database['public']['Tables']['story']['Row'];
 export default function StorySoFar() {
   const [springStory, setSpringStory] = useState<string[]>([]);
   const [codingStory, setCodingStory] = useState<string[]>([]);
+  const springScrollRef = useRef<HTMLDivElement>(null);
+  const codingScrollRef = useRef<HTMLDivElement>(null);
   const supabase = createClient();
+
+  // Auto-scroll effect
+  useEffect(() => {
+    if (springScrollRef.current) {
+      springScrollRef.current.scrollTop = springScrollRef.current.scrollHeight;
+    }
+  }, [springStory]);
+
+  useEffect(() => {
+    if (codingScrollRef.current) {
+      codingScrollRef.current.scrollTop = codingScrollRef.current.scrollHeight;
+    }
+  }, [codingStory]);
 
   // Load initial stories
   useEffect(() => {
@@ -101,7 +116,7 @@ export default function StorySoFar() {
         {/* Spring Story */}
         <Card className="p-4 h-full flex flex-col">
           <h2 className="text-2xl font-bold mb-4">🌸 Spring Tales</h2>
-          <ScrollArea className="flex-1 w-full rounded-md border p-4">
+          <ScrollArea className="flex-1 w-full rounded-md border p-4" ref={springScrollRef}>
             {springStory.length > 0 ? (
               springStory.map((line, index) => (
                 <p key={index} className="mb-2 text-2xl">
@@ -117,7 +132,7 @@ export default function StorySoFar() {
         {/* Coding Story */}
         <Card className="p-4 h-full flex flex-col">
           <h2 className="text-2xl font-bold mb-4">💻 Coding Adventures</h2>
-          <ScrollArea className="flex-1 w-full rounded-md border p-4">
+          <ScrollArea className="flex-1 w-full rounded-md border p-4" ref={codingScrollRef}>
             {codingStory.length > 0 ? (
               codingStory.map((line, index) => (
                 <p key={index} className="mb-2 text-2xl">
