@@ -1,23 +1,19 @@
 'use client';
 
-import { QUESTIONS, useFortunator } from './context';
-import { languageOptions } from './consts';
-import { TrendingUp } from "lucide-react";
-import { Pie, PieChart } from "recharts";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
-  ChartTooltipContent,
+  ChartTooltipContent
 } from "@/components/ui/chart";
+import { Pie, PieChart, ResponsiveContainer } from "recharts";
+import { languageOptions } from './consts';
+import { QUESTIONS, useFortunator } from './context';
 
 export function Visualization({ data }: { data: string[] }) {
   // Count occurrences of each programming language
@@ -49,20 +45,22 @@ export function Visualization({ data }: { data: string[] }) {
   } satisfies ChartConfig;
 
   return (
-    <Card className="flex flex-col">
+    <Card className=" h-full flex flex-col">
       <CardHeader className=" pb-0">
         <CardTitle>Votes on which language must go</CardTitle>
       </CardHeader>
-      <CardContent className="flex-1 pb-0">
+      <div className="flex-1 min-h-[200px]">
+        <ResponsiveContainer width="100%" height="100%">
         <ChartContainer
           config={chartConfig}
-          className="mx-auto  max-h-[250px] pb-0 [&_.recharts-pie-label-text]:fill-foreground"
+          className="m-auto pb-0 [&_.recharts-pie-label-text]:fill-foreground"
         >
+
           <PieChart>
             <ChartTooltip content={<ChartTooltipContent />} />
-            <Pie 
-              data={chartData} 
-              dataKey="count" 
+            <Pie
+              data={chartData}
+              dataKey="count"
               nameKey="language"
               label={({ name, percent }) => {
                 const langLabel = languageOptions.find(opt => opt.id === name)?.label || name;
@@ -72,9 +70,11 @@ export function Visualization({ data }: { data: string[] }) {
               outerRadius={80}
             />
           </PieChart>
-        </ChartContainer>
-      </CardContent>
-     
+          </ChartContainer>
+        </ResponsiveContainer>
+
+      </div>
+
     </Card>
   );
 }

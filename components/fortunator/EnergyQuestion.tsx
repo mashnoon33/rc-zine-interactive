@@ -36,40 +36,38 @@ export function Visualization({ data }: { data: string[] }) {
   }, {} as Record<string, number>);
 
   return (
-    <Card className="p-6">
-      <div className="space-y-4">
-        <CardTitle className='flex justify-between'>
-          <span className="">Average Energy Level</span>
-          <span className="text-2xl font-bold text-purple-600">{energyPercentage.toFixed(1)}%</span>
-        </CardTitle>
-        <div className="h-[200px]">
-          <ResponsiveContainer width="100%" height="100%">
-            <PieChart>
-              <Pie
-                data={chartData}
-                cx="50%"
-                cy="50%"
-                innerRadius={60}
-                outerRadius={80}
-                paddingAngle={5}
-                dataKey="value"
-              >
-                {chartData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-            </PieChart>
-          </ResponsiveContainer>
-        </div>
-        <div className="text-sm text-gray-500 space-y-1">
-          <div className="grid grid-cols-2 gap-2">
-            {energyOptions.map(option => (
-              <div key={option.id} className="flex justify-between">
-                <span>{option.label}</span>
-                <span>{optionCounts[option.id] || 0}</span>
-              </div>
-            ))}
-          </div>
+    <Card className="p-6 h-full flex flex-col">
+      <CardTitle className='flex justify-between mb-4'>
+        <span className="">Average Energy Level</span>
+        <span className="text-2xl font-bold text-purple-600">{energyPercentage.toFixed(1)}%</span>
+      </CardTitle>
+      <div className="flex-1 min-h-[200px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie
+              data={chartData}
+              cx="50%"
+              cy="50%"
+              innerRadius={60}
+              outerRadius={80}
+              paddingAngle={5}
+              dataKey="value"
+            >
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="text-sm text-gray-500 mt-4">
+        <div className="grid grid-cols-2 gap-2">
+          {energyOptions.map(option => (
+            <div key={option.id} className="flex gap-1">
+              <span>{option.label} </span>
+              <span>({optionCounts[option.id] || 0})</span>
+            </div>
+          ))}
         </div>
       </div>
     </Card>

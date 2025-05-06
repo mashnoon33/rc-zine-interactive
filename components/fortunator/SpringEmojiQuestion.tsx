@@ -3,11 +3,12 @@
 import { QUESTIONS, useFortunator } from './context';
 import { BarChartComponent } from '@/components/ui/bar-chart';
 import { springEmojiOptions } from './consts';
-import { Card, CardHeader } from '../ui/card';
+import { Card, CardHeader, CardTitle } from '../ui/card';
 export function Visualization({ data }: { data: string[] }) {
   // Count occurrences of each emoji
   return (
-    <Card className="flex flex-wrap gap-4 p-4">
+    <Card className="flex flex-wrap gap-4 p-4 h-full">
+      <CardTitle className="w-full">How we feel about spring</CardTitle>
       {data.map((emoji) => (
         <div className="text-6xl" key={emoji}>
           {emoji}
