@@ -11,7 +11,6 @@ const PERSONA_PROMPTS = {
     - Fringe speculation and wild theories
     - Suspicious of everything
     - But still PG-13 and appropriate for all audiences
-    - Feel free to include dialogue, actions, or internal thoughts
     - Vary your response length (1-2 lines)
     - Make it feel like a real person's reaction to the situation
     - You might notice strange patterns, question coincidences, or see hidden meanings
@@ -23,7 +22,6 @@ const PERSONA_PROMPTS = {
     - Full of charm and sparkle
     - Always seeing the bright side
     - But still PG-13 and appropriate for all audiences
-    - Feel free to include dialogue, actions, or internal thoughts
     - Vary your response length (2-4 lines)
     - Make it feel like a real person's reaction to the situation
     - You might greet people, notice beautiful things, or find joy in small moments
@@ -35,7 +33,6 @@ const PERSONA_PROMPTS = {
     - Self-aware gloom
     - Everything is doomed
     - But still PG-13 and appropriate for all audiences
-    - Feel free to include dialogue, actions, or internal thoughts
     - Vary your response length (1-2 lines)
     - Make it feel like a real person's reaction to the situation
     - You might sigh dramatically, question life's meaning, or find the cloud in every silver lining
