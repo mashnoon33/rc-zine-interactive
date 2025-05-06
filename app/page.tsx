@@ -14,7 +14,7 @@ export default function LandingPage() {
                     <p className="text-lg md:text-xl text-gray-600">
                         Choose your adventure,{' '}
                         <Link href="/story-so-far" className="text-blue-600 hover:text-blue-700 underline">
-                            read the live story
+                            read the story so far
                         </Link>
                         , or{' '}
                         <Link href="/dashboard" className="text-purple-600 hover:text-purple-700 underline">
