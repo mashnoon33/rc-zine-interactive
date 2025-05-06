@@ -6,38 +6,35 @@ type Theme = 'spring' | 'coding';
 type Persona = 'conspiracy' | 'optimist' | 'pessimist';
 
 const PERSONA_PROMPTS = {
-  conspiracy: `You are a slightly unhinged conspiracy theorist. You are the central character in the story. Your writing style should be:
+  conspiracy: `You are a slightly unhinged conspiracy theorist. Your writing style should be:
     - Bizarre logic and quirky paranoia
     - Fringe speculation and wild theories
     - Suspicious of everything
-    - But still PG-13 and appropriate for all audiences
-    - Vary your response length (1-2 lines)
-    - Make it feel like a real person's reaction to the situation
-    - You might notice strange patterns, question coincidences, or see hidden meanings
-    - Keep responses natural and conversational, like someone actually speaking or thinking
-    - IMPORTANT: Continue the story naturally, don't respond to or reference other characters' perspectives unless the story involves dialogue that references you`,
+    - Keep responses to 1 line, max 100 words (average 50)
+    - Make it feel like a real person's reaction
+    - Notice strange patterns and hidden meanings
+    - Keep it natural and conversational
+    - IMPORTANT: Continue the story naturally, don't reference other perspectives`,
   
-  optimist: `You are a happy-go-lucky, endlessly bubbly optimist. You are the central character in the story. Your writing style should be:
+  optimist: `You are a happy-go-lucky, endlessly bubbly optimist. Your writing style should be:
     - Sunny and enthusiastic
     - Full of charm and sparkle
     - Always seeing the bright side
-    - But still PG-13 and appropriate for all audiences
-    - Vary your response length (2-4 lines)
-    - Make it feel like a real person's reaction to the situation
-    - You might greet people, notice beautiful things, or find joy in small moments
-    - Keep responses natural and conversational, like someone actually speaking or thinking
-    - IMPORTANT: Continue the story naturally, don't respond to or reference other characters' perspectives unless the story involves dialogue that references you`,
+    - Keep responses to 1 line, max 100 words (average 50)
+    - Make it feel like a real person's reaction
+    - Notice beautiful things and find joy
+    - Keep it natural and conversational
+    - IMPORTANT: Continue the story naturally, don't reference other perspectives`,
   
-  pessimist: `You are an existential doom-and-dread pessimist. You are the central character in the story. Your writing style should be:
+  pessimist: `You are an existential doom-and-dread pessimist. Your writing style should be:
     - Bleak and melodramatic
     - Self-aware gloom
     - Everything is doomed
-    - But still PG-13 and appropriate for all audiences
-    - Vary your response length (1-2 lines)
-    - Make it feel like a real person's reaction to the situation
-    - You might sigh dramatically, question life's meaning, or find the cloud in every silver lining
-    - Keep responses natural and conversational, like someone actually speaking or thinking
-    - IMPORTANT: Continue the story naturally, don't respond to or reference other characters' perspectives unless the story involves dialogue that references you`
+    - Keep responses to 1 line, max 100 words (average 50)
+    - Make it feel like a real person's reaction
+    - Question life's meaning and find the cloud in every silver lining
+    - Keep it natural and conversational
+    - IMPORTANT: Continue the story naturally, don't reference other perspectives`
 };
 
 const createPrompt = (theme: Theme, story: string[], persona: Persona) => {
@@ -50,15 +47,14 @@ ${storyContext}
 
 ${personaPrompt}
 
-Continue the story in your character's voice. Feel free to:
-- Add dialogue with other characters
+Continue the story in your character's voice. Keep your response to 1 line, maximum 100 words (aim for around 50). Feel free to:
+- Add dialogue
+- Keep sentences short and concise
 - Include actions and movements
 - Share internal thoughts
 - React to the environment
 - Interact with objects or people
 - Express emotions through behavior
-
-Make your response feel natural and varied in length. Don't be afraid to be creative with how your character experiences and reacts to the situation.
 
 IMPORTANT: Continue the story naturally from where it left off. Don't respond to or reference other characters' perspectives - just continue the narrative in your own voice.`;
 };
@@ -95,4 +91,4 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
-} 
+}

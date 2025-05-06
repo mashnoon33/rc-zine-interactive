@@ -16,9 +16,13 @@ export default function LandingPage() {
                         </h1>
                     </Link>
                     <p className="text-xl md:text-2xl text-gray-600 mb-6">
-                        Choose your adventure or{' '}
+                        Choose your adventure,{' '}
+                        <Link href="/story-so-far" className="text-blue-600 hover:text-blue-700 underline">
+                            read the live story
+                        </Link>
+                        , or{' '}
                         <Link href="/dashboard" className="text-purple-600 hover:text-purple-700 underline">
-                            View live results
+                            view live survey results
                         </Link>
                     </p>
                 </div>
