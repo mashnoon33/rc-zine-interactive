@@ -27,8 +27,8 @@ export default function StoryTime() {
   const supabase = createClient();
 
   const initialPrompts = {
-    spring: "It's the first day of spring, and New York City is alive with a sunny blue sky and smell of fresh cherry blossoms.",
-    coding: "You've just woken up to find your computer crashed overnight. Problem? You fell asleep before you had a chance to commit the last 24 hours of code you've been toiling at.",
+    spring: "It's the first day of spring, and New York City is alive with a sunny blue sky and the smell of fresh cherry blossoms.",
+    coding: "You've just woken up to find your computer crashed overnight. Problem? You nodded off before committing the last 24 hours of code you've been toiling at.",
   };
 
   // Load initial story from database
